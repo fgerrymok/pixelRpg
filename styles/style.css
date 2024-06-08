@@ -2,6 +2,10 @@ body {
     background-color: blue;
 }
 
-#game-canvas{
+#game-container {
+    width: 22rem;
+    height: 12.375rem;
     border: 1px solid black;
+    margin: 0 auto;
+    transform: scale(2) translateY(50%);
 }
