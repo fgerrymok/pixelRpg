@@ -9,3 +9,7 @@ body {
     margin: 0 auto;
     transform: scale(2) translateY(50%);
 }
+
+#game-canvas {
+    image-rendering: pixelated;
+}
