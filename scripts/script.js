@@ -41,6 +41,39 @@ class GameObject {
   }
 }
 
+class GamePerson extends GameObject {
+  constructor(imageSrc, x, y) {
+    super(imageSrc, x, y);
+  }
+
+  move(keyPress) {
+    // console.log(`You pressed ${keyPress}`);
+    if (keyPress === "w") {
+      console.log("Move up");
+      // y - 1
+    }
+    if (keyPress === "a") {
+      console.log("Move left");
+      // x - 1
+    }
+    if (keyPress === "s") {
+      console.log("Move down");
+      // y + 1
+    }
+    if (keyPress === "d") {
+      console.log("Move right");
+      // x + 1
+    }
+  }
+}
+
+// Event Listeners
+
+document.addEventListener("keypress", function (event) {
+  const keyPress = event.key;
+  hero.move(keyPress);
+});
+
 // Functions
 function generateNewWorld() {
   // when the image loads, we draw the image onto the canvas
@@ -50,5 +83,5 @@ function generateNewWorld() {
 }
 
 generateNewWorld();
-const hero = new GameObject("/images/hero_sprite_sheet.png", 1, 1);
+const hero = new GamePerson("/images/hero_sprite_sheet.png", 1, 1);
 hero.generateSprite();
