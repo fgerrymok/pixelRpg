@@ -34,7 +34,7 @@ class GameObject {
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
     const x = this.x * 16 - 7;
-    const y = this.y * 16 - 18;
+    const y = this.y * 16 - 16;
     const spriteWidth = 32;
     const spriteHeight = 32;
     // write the sprite sheet onto the ctx
@@ -60,20 +60,23 @@ class GameObject {
       console.log("Move up");
       this.y -= 1;
       map.generateMap();
-      hero.generateSprite(0, 0);
+      hero.generateSprite(0, 32);
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
       map.generateMap();
-      hero.generateSprite(32, 32);
+      hero.generateSprite(32, 0);
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
       map.generateMap();
-      hero.generateSprite(0, 0);
+      hero.generateSprite(32, 32);
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
+      map.generateMap();
+      hero.generateSprite(0, 0);
+    } else {
       map.generateMap();
       hero.generateSprite(0, 0);
     }
