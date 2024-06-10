@@ -29,11 +29,11 @@ class GameObject {
     this.y = y;
   }
 
-  generateSprite() {
+  generateSprite(cutX, cutY) {
     // create the hero image
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
-    const x = this.x * 16 - 8;
+    const x = this.x * 16 - 7;
     const y = this.y * 16 - 18;
     const spriteWidth = 32;
     const spriteHeight = 32;
@@ -41,8 +41,8 @@ class GameObject {
     objectImg.onload = () => {
       ctx.drawImage(
         objectImg,
-        0,
-        0,
+        cutX,
+        cutY,
         spriteWidth,
         spriteHeight,
         x,
@@ -59,18 +59,24 @@ class GameObject {
     if (keyPress === "w") {
       console.log("Move up");
       this.y -= 1;
+      map.generateMap();
+      hero.generateSprite(0, 0);
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
+      map.generateMap();
+      hero.generateSprite(32, 32);
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
+      map.generateMap();
+      hero.generateSprite(0, 0);
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
+      map.generateMap();
+      hero.generateSprite(0, 0);
     }
-    map.generateMap();
-    hero.generateSprite();
   }
 }
 
@@ -114,9 +120,3 @@ function beginGameLoop() {
   // The step function is called once when beginGameLoop is called
   step();
 }
-
-const map = new Map("/images/background.png", 0, 0);
-const hero = new GameObject("/images/hero_sprite_sheet.png", 1, 1);
-map.generateMap();
-hero.generateSprite();
-beginGameLoop();
