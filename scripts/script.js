@@ -60,34 +60,56 @@ class GameObject {
       this.y -= 1;
       map.generateMap();
       hero.generateSprite(0, 32);
+      hero.loadStatusBars();
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
       map.generateMap();
       hero.generateSprite(32, 0);
+      hero.loadStatusBars();
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
       map.generateMap();
       hero.generateSprite(32, 32);
+      hero.loadStatusBars();
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
       map.generateMap();
       hero.generateSprite(0, 0);
+      hero.loadStatusBars();
     } else {
       map.generateMap();
       hero.generateSprite(0, 0);
+      hero.loadStatusBars();
     }
   }
 
+  loadStatusBars(cutX, cutY) {
+    const hungerBar = new Image();
+    hungerBar.src = "/images/health_status.png";
+    hungerBar.onload = () => {
+      ctx.drawImage(hungerBar, cutX, cutY, 80, 16, 3, 3, 80, 16);
+    };
+  }
+
   updateHungerStatus() {
-    console.log("this is working");
-    console.log(this.hunger);
     const self = this;
     setInterval(function () {
       self.hunger -= 1;
       console.log(self.hunger);
+      if (self.hunger === 4) {
+        self.loadStatusBars(80, 0);
+      } else if (self.hunger === 3) {
+        self.loadStatusBars(160, 0);
+      } else if (self.hunger === 2) {
+        self.loadStatusBars(0, 16);
+      } else if (self.hunger === 1) {
+        self.loadStatusBars(80, 16);
+      } else if (self.hunger === 0) {
+        self.loadStatusBars(160, 16);
+      }
     }, 5000);
   }
 }

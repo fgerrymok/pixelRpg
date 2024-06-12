@@ -6,3 +6,4 @@ map.generateMap();
 hero.generateSprite(0, 0);
 beginGameLoop();
 hero.updateHungerStatus();
+hero.loadStatusBars(0, 0);
