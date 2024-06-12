@@ -28,9 +28,11 @@ class GameObject {
     this.x = x;
     this.y = y;
     this.hunger = 5;
+    this.cutX = 0;
+    this.cutY = 0;
   }
 
-  generateSprite(cutX, cutY) {
+  generateSprite() {
     // create the hero image
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
@@ -42,8 +44,8 @@ class GameObject {
     objectImg.onload = () => {
       ctx.drawImage(
         objectImg,
-        cutX,
-        cutY,
+        this.cutX,
+        this.cutY,
         spriteWidth,
         spriteHeight,
         x,
@@ -60,21 +62,29 @@ class GameObject {
     if (keyPress === "w") {
       console.log("Move up");
       this.y -= 1;
-      hero.generateSprite(0, 32);
+      this.cutX = 0;
+      this.cutY = 32;
+      this.generateSprite();
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
-      hero.generateSprite(32, 0);
+      this.cutX = 32;
+      this.cutY = 0;
+      this.generateSprite();
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
-      hero.generateSprite(32, 32);
+      this.cutX = 32;
+      this.cutY = 32;
+      this.generateSprite();
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
-      hero.generateSprite(0, 0);
+      this.cutX = 0;
+      this.cutY = 0;
+      this.generateSprite();
     } else {
-      hero.generateSprite(0, 0);
+      this.generateSprite();
     }
   }
 
@@ -130,19 +140,19 @@ document.addEventListener("keypress", function (event) {
 
 // Let's create a function that begins the game loop
 
-function beginGameLoop() {
-  function step() {
-    // ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    console.log("running");
-    // hero.updateCoordinates();
+// function beginGameLoop() {
+//   function step() {
+//     // ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+//     console.log("running");
+//     // hero.updateCoordinates();
 
-    // The step function runs a requestAnimationFrame which calls the step function
-    // This is different than step calling itself, rather step is calling step again when a new frame starts
-    // requestAnimationFrame provides a gap for other processing to happen so that our computer doesn't crash
-    requestAnimationFrame(() => {
-      step();
-    });
-  }
-  // The step function is called once when beginGameLoop is called
-  step();
-}
+//     // The step function runs a requestAnimationFrame which calls the step function
+//     // This is different than step calling itself, rather step is calling step again when a new frame starts
+//     // requestAnimationFrame provides a gap for other processing to happen so that our computer doesn't crash
+//     requestAnimationFrame(() => {
+//       step();
+//     });
+//   }
+//   // The step function is called once when beginGameLoop is called
+//   step();
+// }
