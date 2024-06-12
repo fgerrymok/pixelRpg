@@ -5,3 +5,4 @@ const hero = new GameObject("/images/dead_body.png", 1, 1);
 map.generateMap();
 hero.generateSprite(0, 0);
 beginGameLoop();
+hero.updateHungerStatus();

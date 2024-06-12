@@ -3,10 +3,8 @@
 // Constants
 const gameCanvas = document.getElementById("game-canvas");
 const ctx = gameCanvas.getContext("2d");
-// we create a new image, to be inserted into the canvas through a separate function
 
 // Classes
-
 class Map {
   constructor(mapSrc, x, y) {
     this.mapSrc = mapSrc;
@@ -27,6 +25,7 @@ class GameObject {
     this.imageSrc = imageSrc;
     this.x = x;
     this.y = y;
+    this.hunger = 5;
   }
 
   generateSprite(cutX, cutY) {
@@ -80,6 +79,16 @@ class GameObject {
       map.generateMap();
       hero.generateSprite(0, 0);
     }
+  }
+
+  updateHungerStatus() {
+    console.log("this is working");
+    console.log(this.hunger);
+    const self = this;
+    setInterval(function () {
+      self.hunger -= 1;
+      console.log(self.hunger);
+    }, 5000);
   }
 }
 
