@@ -7,9 +7,17 @@ body {
     height: 12.375rem;
     border: 1px solid black;
     margin: 0 auto;
-    transform: scale(2) translateY(50%);
+    transform: scale(3) translateY(40%);
+    position: relative;
 }
 
 #game-canvas {
     image-rendering: pixelated;
+    position: absolute;
+    z-index: 2;
 }
+
+#static-canvas {
+    image-rendering: pixelated;
+}
+

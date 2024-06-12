@@ -3,6 +3,8 @@
 // Constants
 const gameCanvas = document.getElementById("game-canvas");
 const ctx = gameCanvas.getContext("2d");
+const staticCanvas = document.getElementById("static-canvas");
+const staticCtx = staticCanvas.getContext("2d");
 
 // Classes
 class Map {
@@ -16,7 +18,7 @@ class Map {
     const gameMap = new Image();
     gameMap.src = this.mapSrc;
     gameMap.onload = () => {
-      ctx.drawImage(gameMap, this.x, this.y);
+      staticCtx.drawImage(gameMap, this.x, this.y);
     };
   }
 }
@@ -58,31 +60,21 @@ class GameObject {
     if (keyPress === "w") {
       console.log("Move up");
       this.y -= 1;
-      map.generateMap();
       hero.generateSprite(0, 32);
-      hero.loadStatusBars();
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
-      map.generateMap();
       hero.generateSprite(32, 0);
-      hero.loadStatusBars();
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
-      map.generateMap();
       hero.generateSprite(32, 32);
-      hero.loadStatusBars();
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
-      map.generateMap();
       hero.generateSprite(0, 0);
-      hero.loadStatusBars();
     } else {
-      map.generateMap();
       hero.generateSprite(0, 0);
-      hero.loadStatusBars();
     }
   }
 
@@ -90,7 +82,7 @@ class GameObject {
     const hungerBar = new Image();
     hungerBar.src = "/images/health_status.png";
     hungerBar.onload = () => {
-      ctx.drawImage(hungerBar, cutX, cutY, 80, 16, 3, 3, 80, 16);
+      staticCtx.drawImage(hungerBar, cutX, cutY, 80, 16, 3, 3, 80, 16);
     };
   }
 
