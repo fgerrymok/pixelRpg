@@ -21,3 +21,21 @@ body {
     image-rendering: pixelated;
 }
 
+#ham {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    top: 0.5rem;
+    width: 3rem;
+    font-size: 0.5rem;
+}
+
+#phone {
+    position: absolute;
+    z-index: 3;
+    top: 2.5rem;
+    right: 0;
+    width: 3rem;
+    font-size: 0.5rem;
+}
+

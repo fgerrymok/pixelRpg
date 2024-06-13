@@ -67,26 +67,36 @@ class GameObject {
       this.cutX = 0;
       this.cutY = 32;
       this.generateSprite();
+      ham.generateSprite();
+      phone.generateSprite();
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
       this.cutX = 32;
       this.cutY = 0;
       this.generateSprite();
+      ham.generateSprite();
+      phone.generateSprite();
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
       this.cutX = 32;
       this.cutY = 32;
       this.generateSprite();
+      ham.generateSprite();
+      phone.generateSprite();
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
       this.cutX = 0;
       this.cutY = 0;
       this.generateSprite();
+      ham.generateSprite();
+      phone.generateSprite();
     } else {
       this.generateSprite();
+      ham.generateSprite();
+      phone.generateSprite();
     }
   }
 
@@ -114,11 +124,17 @@ class GameObject {
     };
   }
 
-  updateHungerStatus() {
+  updateHungerStatus(food) {
     const self = this;
-    setInterval(function () {
+    const hungerIntervalHandler = setInterval(checkHungerStatus, 3000);
+    function checkHungerStatus() {
       self.hunger -= 1;
       console.log(self.hunger);
+      // if (food == "acquired") {
+      //   self.hunger += 1;
+      //   console.log("ate food");
+      //   console.log(self.hunger);
+      // }
       if (self.hunger === 4) {
         self.loadHungerBar(80, 0);
       } else if (self.hunger === 3) {
@@ -130,13 +146,16 @@ class GameObject {
       } else if (self.hunger === 0) {
         self.loadHungerBar(160, 16);
         console.log("you lose");
+        clearInterval(hungerIntervalHandler);
       }
-    }, 3000);
+    }
   }
 
   updateSocialStatus() {
     const self = this;
-    setInterval(function () {
+    const socialIntervalHandler = setInterval(checkSocialStatus, 5000);
+
+    function checkSocialStatus() {
       self.social -= 1;
       console.log(self.social);
       if (self.social === 4) {
@@ -150,8 +169,9 @@ class GameObject {
       } else if (self.social === 0) {
         self.loadSocialBar(160, 16);
         console.log("you lose");
+        clearInterval(socialIntervalHandler);
       }
-    }, 5000);
+    }
   }
 }
 
@@ -160,6 +180,11 @@ class GameObject {
 document.addEventListener("keypress", function (event) {
   const keyPress = event.key;
   hero.updateCoordinates(keyPress);
+});
+
+ham.addEventListener("click", function () {
+  const food = "acquired";
+  hero.updateHungerStatus(food);
 });
 
 // Functions
