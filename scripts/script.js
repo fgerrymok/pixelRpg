@@ -27,7 +27,9 @@ class GameObject {
     this.imageSrc = imageSrc;
     this.x = x;
     this.y = y;
+    this.health = 5;
     this.hunger = 5;
+    this.social = 5;
     this.cutX = 0;
     this.cutY = 0;
   }
@@ -88,11 +90,27 @@ class GameObject {
     }
   }
 
-  loadStatusBars(cutX, cutY) {
+  loadHealthBar(cutX, cutY) {
+    const healthBar = new Image();
+    healthBar.src = "/images/health_status.png";
+    healthBar.onload = () => {
+      staticCtx.drawImage(healthBar, cutX, cutY, 80, 16, 3, 1, 80, 16);
+    };
+  }
+
+  loadHungerBar(cutX, cutY) {
     const hungerBar = new Image();
-    hungerBar.src = "/images/health_status.png";
+    hungerBar.src = "/images/hunger_status.png";
     hungerBar.onload = () => {
-      staticCtx.drawImage(hungerBar, cutX, cutY, 80, 16, 3, 3, 80, 16);
+      staticCtx.drawImage(hungerBar, cutX, cutY, 80, 16, 3, 12, 80, 16);
+    };
+  }
+
+  loadSocialBar(cutX, cutY) {
+    const socialBar = new Image();
+    socialBar.src = "/images/social_status.png";
+    socialBar.onload = () => {
+      staticCtx.drawImage(socialBar, cutX, cutY, 80, 16, 3, 23, 80, 16);
     };
   }
 
@@ -102,15 +120,36 @@ class GameObject {
       self.hunger -= 1;
       console.log(self.hunger);
       if (self.hunger === 4) {
-        self.loadStatusBars(80, 0);
+        self.loadHungerBar(80, 0);
       } else if (self.hunger === 3) {
-        self.loadStatusBars(160, 0);
+        self.loadHungerBar(160, 0);
       } else if (self.hunger === 2) {
-        self.loadStatusBars(0, 16);
+        self.loadHungerBar(0, 16);
       } else if (self.hunger === 1) {
-        self.loadStatusBars(80, 16);
+        self.loadHungerBar(80, 16);
       } else if (self.hunger === 0) {
-        self.loadStatusBars(160, 16);
+        self.loadHungerBar(160, 16);
+        console.log("you lose");
+      }
+    }, 3000);
+  }
+
+  updateSocialStatus() {
+    const self = this;
+    setInterval(function () {
+      self.social -= 1;
+      console.log(self.social);
+      if (self.social === 4) {
+        self.loadSocialBar(80, 0);
+      } else if (self.social === 3) {
+        self.loadSocialBar(160, 0);
+      } else if (self.social === 2) {
+        self.loadSocialBar(0, 16);
+      } else if (self.social === 1) {
+        self.loadSocialBar(80, 16);
+      } else if (self.social === 0) {
+        self.loadSocialBar(160, 16);
+        console.log("you lose");
       }
     }, 5000);
   }
