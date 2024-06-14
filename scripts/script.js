@@ -124,27 +124,34 @@ class GameObject {
     };
   }
 
-  updateHungerStatus(food) {
+  updateHungerStatus(food = 0) {
     const self = this;
+    const cutX = 0;
+    const cutY = 0;
+    console.log(`Food: ${food}`);
     const hungerIntervalHandler = setInterval(checkHungerStatus, 3000);
+
+    if (food > 0) {
+      clearInterval(hungerIntervalHandler);
+      this.hunger += 1;
+      // self.loadHungerBar(cutX + 80, cutY + 16);
+      console.log("you ate food");
+      console.log(`Hunger Status: ${self.hunger}`);
+    }
+
     function checkHungerStatus() {
       self.hunger -= 1;
-      console.log(self.hunger);
-      // if (food == "acquired") {
-      //   self.hunger += 1;
-      //   console.log("ate food");
-      //   console.log(self.hunger);
-      // }
+      console.log(`Hunger Status: ${self.hunger}`);
       if (self.hunger === 4) {
-        self.loadHungerBar(80, 0);
+        self.loadHungerBar(cutX + 80, cutY);
       } else if (self.hunger === 3) {
-        self.loadHungerBar(160, 0);
+        self.loadHungerBar(cutX + 160, cutY);
       } else if (self.hunger === 2) {
-        self.loadHungerBar(0, 16);
+        self.loadHungerBar(cutX, cutY + 16);
       } else if (self.hunger === 1) {
-        self.loadHungerBar(80, 16);
+        self.loadHungerBar(cutX + 80, cutY + 16);
       } else if (self.hunger === 0) {
-        self.loadHungerBar(160, 16);
+        self.loadHungerBar(cutX + 160, cutY + 16);
         console.log("you lose");
         clearInterval(hungerIntervalHandler);
       }
@@ -153,11 +160,11 @@ class GameObject {
 
   updateSocialStatus() {
     const self = this;
-    const socialIntervalHandler = setInterval(checkSocialStatus, 5000);
+    const socialIntervalHandler = setInterval(checkSocialStatus, 9000);
 
     function checkSocialStatus() {
       self.social -= 1;
-      console.log(self.social);
+      console.log(`Social Status: ${self.social}`);
       if (self.social === 4) {
         self.loadSocialBar(80, 0);
       } else if (self.social === 3) {
@@ -182,10 +189,11 @@ document.addEventListener("keypress", function (event) {
   hero.updateCoordinates(keyPress);
 });
 
-ham.addEventListener("click", function () {
-  const food = "acquired";
-  hero.updateHungerStatus(food);
-});
+ham.addEventListener("click", eatFood);
+
+function eatFood() {
+  hero.updateHungerStatus(1);
+}
 
 // Functions
 
