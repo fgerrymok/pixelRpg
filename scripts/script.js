@@ -22,6 +22,24 @@ class Map {
     };
   }
 }
+
+class StaticGameObject {
+  constructor(imageSrc, x, y) {
+    this.imageSrc = imageSrc;
+    this.x = x;
+    this.y = y;
+  }
+
+  generateSprite() {
+    const objectImg = new Image();
+    objectImg.src = this.imageSrc;
+    const x = this.x * 16 - 7;
+    const y = this.y * 16 - 16;
+    objectImg.onload = () => {
+      staticCtx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
+    };
+  }
+}
 class GameObject {
   constructor(imageSrc, x, y) {
     this.imageSrc = imageSrc;

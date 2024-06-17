@@ -2,8 +2,8 @@
 
 const map = new Map("/images/background_tiles.png", 0, 0);
 const hero = new GameObject("/images/dead_body.png", 5, 1);
-const ham = new GameObject("/images/ham.png", 17, 1);
-const phone = new GameObject("/images/phone.png", 17, 3);
+const ham = new StaticGameObject("/images/ham.png", 17, 1);
+const phone = new StaticGameObject("/images/phone.png", 17, 3);
 map.generateMap();
 hero.generateSprite();
 ham.generateSprite();
