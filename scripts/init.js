@@ -8,10 +8,12 @@ map.generateMap();
 hero.generateSprite();
 ham.generateSprite();
 phone.generateSprite();
+//
 hero.loadHealthBar(0, 0);
-hero.loadHungerBar(0, 0);
 hero.loadSocialBar(0, 0);
+checkForChanges();
+startStatusBarTimers();
 
 // beginGameLoop();
-hero.updateHungerStatus();
-hero.updateSocialStatus();
+// hero.updateHungerStatus();
+// hero.updateSocialStatus();
