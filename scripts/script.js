@@ -119,7 +119,7 @@ class GameObject {
   }
 
   // On load, hunger needs to decrease every 5 seconds. (this is a set inteveral)
-  // If player eats, the players hunger levels (this.hunger) increases by 1, and the timer resets.
+  // If player eats, the players hunger levels (this.hunger) increases by 1.
 
   // Every time this method is called, it will read the current the hunger property of the object and update the hunger sprite accordingly.
   loadHungerBar() {
@@ -164,6 +164,48 @@ class GameObject {
     };
   }
 
+  loadSocialBar() {
+    const socialBar = new Image();
+    socialBar.src = "/images/social_status.png";
+    const cutX = 0;
+    const cutY = 0;
+    socialBar.onload = () => {
+      if (this.social === 5) {
+        staticCtx.drawImage(socialBar, cutX, cutY, 80, 16, 3, 23, 80, 16);
+      } else if (this.social === 4) {
+        staticCtx.drawImage(socialBar, cutX + 80, cutY, 80, 16, 3, 23, 80, 16);
+      } else if (this.social === 3) {
+        staticCtx.drawImage(socialBar, cutX + 160, cutY, 80, 16, 3, 23, 80, 16);
+      } else if (this.social === 2) {
+        staticCtx.drawImage(socialBar, cutX, cutY + 16, 80, 16, 3, 23, 80, 16);
+      } else if (this.social === 1) {
+        staticCtx.drawImage(
+          socialBar,
+          cutX + 80,
+          cutY + 16,
+          80,
+          16,
+          3,
+          23,
+          80,
+          16
+        );
+      } else if (this.social === 0) {
+        staticCtx.drawImage(
+          socialBar,
+          cutX + 160,
+          cutY + 16,
+          80,
+          16,
+          3,
+          23,
+          80,
+          16
+        );
+      }
+    };
+  }
+
   loadHealthBar(cutX, cutY) {
     const healthBar = new Image();
     healthBar.src = "/images/health_status.png";
@@ -171,72 +213,7 @@ class GameObject {
       staticCtx.drawImage(healthBar, cutX, cutY, 80, 16, 3, 1, 80, 16);
     };
   }
-
-  loadSocialBar(cutX, cutY) {
-    const socialBar = new Image();
-    socialBar.src = "/images/social_status.png";
-    socialBar.onload = () => {
-      staticCtx.drawImage(socialBar, cutX, cutY, 80, 16, 3, 23, 80, 16);
-    };
-  }
 }
-
-// updateHungerStatus(food = 0) {
-//   const self = this;
-//   const cutX = 0;
-//   const cutY = 0;
-//   console.log(`Food: ${food}`);
-//   const hungerIntervalHandler = setInterval(checkHungerStatus, 3000);
-
-//   if (food > 0) {
-//     clearInterval(hungerIntervalHandler);
-//     this.hunger += 1;
-//     // self.loadHungerBar(cutX + 80, cutY + 16);
-//     console.log("you ate food");
-//     console.log(`Hunger Status: ${self.hunger}`);
-//   }
-
-//   function checkHungerStatus() {
-//     self.hunger -= 1;
-//     console.log(`Hunger Status: ${self.hunger}`);
-//     if (self.hunger === 4) {
-//       self.loadHungerBar(cutX + 80, cutY);
-//     } else if (self.hunger === 3) {
-//       self.loadHungerBar(cutX + 160, cutY);
-//     } else if (self.hunger === 2) {
-//       self.loadHungerBar(cutX, cutY + 16);
-//     } else if (self.hunger === 1) {
-//       self.loadHungerBar(cutX + 80, cutY + 16);
-//     } else if (self.hunger === 0) {
-//       self.loadHungerBar(cutX + 160, cutY + 16);
-//       console.log("you lose");
-//       clearInterval(hungerIntervalHandler);
-//     }
-//   }
-// }
-
-// updateSocialStatus() {
-//   const self = this;
-//   const socialIntervalHandler = setInterval(checkSocialStatus, 9000);
-
-//   function checkSocialStatus() {
-//     self.social -= 1;
-//     console.log(`Social Status: ${self.social}`);
-//     if (self.social === 4) {
-//       self.loadSocialBar(80, 0);
-//     } else if (self.social === 3) {
-//       self.loadSocialBar(160, 0);
-//     } else if (self.social === 2) {
-//       self.loadSocialBar(0, 16);
-//     } else if (self.social === 1) {
-//       self.loadSocialBar(80, 16);
-//     } else if (self.social === 0) {
-//       self.loadSocialBar(160, 16);
-//       console.log("you lose");
-//       clearInterval(socialIntervalHandler);
-//     }
-//   }
-// }
 
 // Event Listeners
 
@@ -246,10 +223,16 @@ document.addEventListener("keypress", function (event) {
   hero.updateCoordinates(keyPress);
 });
 
-// Listens for clicks on the 'ham' button to simulate eating food.
+// Listens for clicks on the 'ham' button to simulate eating food (increases health status).
 ham.addEventListener("click", () => {
   console.log("you ate food");
   hero.hunger += 1;
+});
+
+// Listens for clicks on the 'phone' button to simulate making a phone call (increases social status).
+phone.addEventListener("click", () => {
+  console.log("you made a phone call");
+  hero.social += 1;
 });
 
 // Functions
@@ -259,6 +242,9 @@ function checkForChanges() {
   setInterval(() => {
     hero.loadHungerBar();
   }, 100);
+  setInterval(() => {
+    hero.loadSocialBar();
+  }, 100);
 }
 
 // Starts the count down that decrease food levels.
@@ -267,10 +253,17 @@ function startStatusBarTimers() {
   setInterval(() => {
     if (hero.hunger > 0) {
       hero.hunger -= 1;
-      hero.loadHungerBar();
       console.log(`Hunger: ${hero.hunger}`);
     }
   }, 3000);
+
+  // Social Status Timer
+  setInterval(() => {
+    if (hero.social > 0) {
+      hero.social -= 1;
+      console.log(`Hunger: ${hero.social}`);
+    }
+  }, 5000);
 }
 
 // Need to create a loop where the hero sprite is constantly being refreshed on the canvas.
