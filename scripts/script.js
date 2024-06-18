@@ -85,36 +85,26 @@ class GameObject {
       this.cutX = 0;
       this.cutY = 32;
       this.generateSprite();
-      ham.generateSprite();
-      phone.generateSprite();
     } else if (keyPress === "a") {
       console.log("Move left");
       this.x -= 1;
       this.cutX = 32;
       this.cutY = 0;
       this.generateSprite();
-      ham.generateSprite();
-      phone.generateSprite();
     } else if (keyPress === "s") {
       console.log("Move down");
       this.y += 1;
       this.cutX = 32;
       this.cutY = 32;
       this.generateSprite();
-      ham.generateSprite();
-      phone.generateSprite();
     } else if (keyPress === "d") {
       console.log("Move right");
       this.x += 1;
       this.cutX = 0;
       this.cutY = 0;
       this.generateSprite();
-      ham.generateSprite();
-      phone.generateSprite();
     } else {
       this.generateSprite();
-      ham.generateSprite();
-      phone.generateSprite();
     }
   }
 
@@ -220,7 +210,20 @@ class GameObject {
 // Listens w, s, a, d keys to move the character.
 document.addEventListener("keypress", function (event) {
   const keyPress = event.key;
-  hero.updateCoordinates(keyPress);
+  if (
+    // disable moving up when y = 1
+    (hero.y == 1 && keyPress == "w") ||
+    // disable moving down when y = 11
+    (hero.y == 11 && keyPress == "s") ||
+    // disable moving left when x = 0
+    (hero.x == 0 && keyPress == "a") ||
+    // disable moving right when x = 21
+    (hero.x == 21 && keyPress == "d")
+  ) {
+    hero.updateCoordinates("l");
+  } else {
+    hero.updateCoordinates(keyPress);
+  }
 });
 
 // Listens for clicks on the 'ham' button to simulate eating food (increases health status).
