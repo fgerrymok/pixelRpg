@@ -79,31 +79,41 @@ class GameObject {
   updateCoordinates(keyPress) {
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     // this method needs to update this.x and this.y when wsad keys are pressed.
-    if (keyPress === "w") {
-      console.log("Move up");
+    if (keyPress === "w" && this.y === 1) {
+      this.cutX = 0;
+      this.cutY = 32;
+      this.generateSprite();
+    } else if (keyPress === "w") {
       this.y -= 1;
       this.cutX = 0;
       this.cutY = 32;
       this.generateSprite();
+    } else if (keyPress === "a" && this.x === 0) {
+      this.cutX = 32;
+      this.cutY = 0;
+      this.generateSprite();
     } else if (keyPress === "a") {
-      console.log("Move left");
       this.x -= 1;
       this.cutX = 32;
       this.cutY = 0;
       this.generateSprite();
+    } else if (keyPress === "s" && this.y === 11) {
+      this.cutX = 32;
+      this.cutY = 32;
+      this.generateSprite();
     } else if (keyPress === "s") {
-      console.log("Move down");
       this.y += 1;
       this.cutX = 32;
       this.cutY = 32;
       this.generateSprite();
-    } else if (keyPress === "d") {
-      console.log("Move right");
-      this.x += 1;
+    } else if (keyPress === "d" && this.x === 21) {
       this.cutX = 0;
       this.cutY = 0;
       this.generateSprite();
-    } else {
+    } else if (keyPress === "d") {
+      this.x += 1;
+      this.cutX = 0;
+      this.cutY = 0;
       this.generateSprite();
     }
   }
@@ -211,19 +221,27 @@ class GameObject {
 document.addEventListener("keypress", function (event) {
   const keyPress = event.key;
   if (
-    // disable moving up when y = 1
-    (hero.y == 1 && keyPress == "w") ||
-    // disable moving down when y = 11
-    (hero.y == 11 && keyPress == "s") ||
-    // disable moving left when x = 0
-    (hero.x == 0 && keyPress == "a") ||
-    // disable moving right when x = 21
-    (hero.x == 21 && keyPress == "d")
+    keyPress === "w" ||
+    keyPress === "a" ||
+    keyPress === "s" ||
+    keyPress === "d"
   ) {
-    hero.updateCoordinates("l");
-  } else {
     hero.updateCoordinates(keyPress);
   }
+  // if (
+  //   // disable moving up when y = 1
+  //   (hero.y == 1 && keyPress == "w") ||
+  //   // disable moving down when y = 11
+  //   (hero.y == 11 && keyPress == "s") ||
+  //   // disable moving left when x = 0
+  //   (hero.x == 0 && keyPress == "a") ||
+  //   // disable moving right when x = 21
+  //   (hero.x == 21 && keyPress == "d")
+  // ) {
+  //   hero.updateCoordinates("l");
+  // } else {
+  //   hero.updateCoordinates(keyPress);
+  // }
 });
 
 // Listens for clicks on the 'ham' button to simulate eating food (increases health status).
