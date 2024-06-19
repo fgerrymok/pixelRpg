@@ -266,19 +266,30 @@ document.addEventListener("keydown", function (event) {
 });
 
 // Listens for clicks on the 'ham' button to simulate eating food (increases health status).
-ham.addEventListener("click", () => {
-  console.log("you ate food");
-  hero.hunger += 1;
-});
+// ham.addEventListener("click", () => {
+//   console.log("you ate food");
+//   hero.hunger += 1;
+// });
 
 // Listens for clicks on the 'phone' button to simulate making a phone call (increases social status).
-phone.addEventListener("click", () => {
-  console.log("you made a phone call");
-  hero.social += 1;
-});
+// phone.addEventListener("click", () => {
+//   console.log("you made a phone call");
+//   hero.social += 1;
+// });
 
-// Listens for keydown "enter" or "spacebar" if:
-//
+// Listens for 'spacebar' and 'enter' to see if the character is beside either the food item, or the social item.
+document.addEventListener("keydown", (event) => {
+  const keyDown = event.key;
+  if (keyDown === " " || keyDown === "Enter") {
+    const besideAndFacingFood = checkIfBesideAndFacingObject(0);
+    const besideAndFacingPhone = checkIfBesideAndFacingObject(1);
+    if (besideAndFacingFood === true) {
+      eatFood();
+    } else if (besideAndFacingPhone === true) {
+      makePhoneCall();
+    }
+  }
+});
 
 // Functions
 
@@ -323,34 +334,37 @@ function checkForObstacles(object, keyDown) {
   }
 }
 
-// Need to create a loop where the hero sprite is constantly being refreshed on the canvas.
-// Each loop should be able to update for a new x and y coordinate.
-// Generate sprite is a method of game object
-// The constructor of game object is where the x and y values are stored. These values are passed in, but we can update them and pass in the new updated coordinates into the sprite.
+// Replenishes hunger status
+function eatFood() {
+  console.log("you ate food");
+  hero.hunger += 1;
+}
 
-// Let's break down the steps:
-// Figure out how to run a loop. Every iteration of the loop, update the x and y coordinates using:
-// hero.updateCoordinates();
-// Once the coordinates are updated, run the sprite generation method and wipe out the old sprite from the canvas
-// hero.generateSprite();
+// Replenishes social status
+function makePhoneCall() {
+  console.log("you made a phone call");
+  hero.social += 1;
+}
 
-// Step 1 is to figure out how to run a loop that keeps generating the sprite in the same location
-
-// Let's create a function that begins the game loop
-
-// function beginGameLoop() {
-//   function step() {
-//     // ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-//     console.log("running");
-//     // hero.updateCoordinates();
-
-//     // The step function runs a requestAnimationFrame which calls the step function
-//     // This is different than step calling itself, rather step is calling step again when a new frame starts
-//     // requestAnimationFrame provides a gap for other processing to happen so that our computer doesn't crash
-//     requestAnimationFrame(() => {
-//       step();
-//     });
-//   }
-//   // The step function is called once when beginGameLoop is called
-//   step();
-// }
+// Checks to see if the character is directly beside AND facing a game object. Accepts a number value to determine which object we would like to check for.
+function checkIfBesideAndFacingObject(index) {
+  if (
+    (hero.x == gameObjectsArray[index].x - 1 &&
+      hero.y == gameObjectsArray[index].y &&
+      hero.cutX == 0 &&
+      hero.cutY == 0) ||
+    (hero.x == gameObjectsArray[index].x + 1 &&
+      hero.y == gameObjectsArray[index].y &&
+      hero.cutX == 32 &&
+      hero.cutY == 0) ||
+    (hero.x == gameObjectsArray[index].x &&
+      hero.y == gameObjectsArray[index].y - 1 &&
+      hero.cutX == 32 &&
+      hero.cutY == 32) ||
+    (hero.x == gameObjectsArray[index].x &&
+      hero.y == gameObjectsArray[index].y + 1 &&
+      hero.cutX == 0 &&
+      hero.cutY == 32)
+  )
+    return true;
+}
