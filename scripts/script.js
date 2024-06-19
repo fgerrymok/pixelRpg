@@ -5,6 +5,7 @@ const gameCanvas = document.getElementById("game-canvas");
 const ctx = gameCanvas.getContext("2d");
 const staticCanvas = document.getElementById("static-canvas");
 const staticCtx = staticCanvas.getContext("2d");
+const gameObjectsArray = [];
 
 // Classes
 class Map {
@@ -76,42 +77,63 @@ class GameObject {
     };
   }
 
-  updateCoordinates(keyPress) {
+  updateCoordinates(keyDown) {
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     // this method needs to update this.x and this.y when wsad keys are pressed.
-    if (keyPress === "w" && this.y === 1) {
+    if (keyDown === "w" && this.y === 1) {
       this.cutX = 0;
       this.cutY = 32;
       this.generateSprite();
-    } else if (keyPress === "w") {
+    } else if (keyDown === "w") {
       this.y -= 1;
       this.cutX = 0;
       this.cutY = 32;
       this.generateSprite();
-    } else if (keyPress === "a" && this.x === 0) {
+    } else if (keyDown === "a" && this.x === 0) {
       this.cutX = 32;
       this.cutY = 0;
       this.generateSprite();
-    } else if (keyPress === "a") {
+    } else if (keyDown === "a") {
       this.x -= 1;
       this.cutX = 32;
       this.cutY = 0;
       this.generateSprite();
-    } else if (keyPress === "s" && this.y === 11) {
+    } else if (keyDown === "s" && this.y === 11) {
       this.cutX = 32;
       this.cutY = 32;
       this.generateSprite();
-    } else if (keyPress === "s") {
+    } else if (keyDown === "s") {
       this.y += 1;
       this.cutX = 32;
       this.cutY = 32;
       this.generateSprite();
-    } else if (keyPress === "d" && this.x === 21) {
+    } else if (keyDown === "d" && this.x === 21) {
       this.cutX = 0;
       this.cutY = 0;
       this.generateSprite();
-    } else if (keyPress === "d") {
+    } else if (keyDown === "d") {
       this.x += 1;
+      this.cutX = 0;
+      this.cutY = 0;
+      this.generateSprite();
+    }
+  }
+
+  turnInPlace(keyDown) {
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    if (keyDown === "w") {
+      this.cutX = 0;
+      this.cutY = 32;
+      this.generateSprite();
+    } else if (keyDown === "a") {
+      this.cutX = 32;
+      this.cutY = 0;
+      this.generateSprite();
+    } else if (keyDown === "s") {
+      this.cutX = 32;
+      this.cutY = 32;
+      this.generateSprite();
+    } else if (keyDown === "d") {
       this.cutX = 0;
       this.cutY = 0;
       this.generateSprite();
@@ -218,30 +240,29 @@ class GameObject {
 // Event Listeners
 
 // Listens w, s, a, d keys to move the character.
-document.addEventListener("keypress", function (event) {
-  const keyPress = event.key;
-  if (
-    keyPress === "w" ||
-    keyPress === "a" ||
-    keyPress === "s" ||
-    keyPress === "d"
+document.addEventListener("keydown", function (event) {
+  const keyDown = event.key.toLowerCase();
+  let moveCharacter = [];
+  gameObjectsArray.forEach((object) => {
+    const movement = checkForObstacles(object, keyDown);
+    if (movement === "move") {
+      moveCharacter.push(true);
+    } else if (movement === "don't move") {
+      console.log("no move");
+      moveCharacter.push(false);
+    }
+  });
+
+  if (moveCharacter.includes(false)) {
+    hero.turnInPlace(keyDown);
+  } else if (
+    keyDown === "w" ||
+    keyDown === "a" ||
+    keyDown === "s" ||
+    keyDown === "d"
   ) {
-    hero.updateCoordinates(keyPress);
+    hero.updateCoordinates(keyDown);
   }
-  // if (
-  //   // disable moving up when y = 1
-  //   (hero.y == 1 && keyPress == "w") ||
-  //   // disable moving down when y = 11
-  //   (hero.y == 11 && keyPress == "s") ||
-  //   // disable moving left when x = 0
-  //   (hero.x == 0 && keyPress == "a") ||
-  //   // disable moving right when x = 21
-  //   (hero.x == 21 && keyPress == "d")
-  // ) {
-  //   hero.updateCoordinates("l");
-  // } else {
-  //   hero.updateCoordinates(keyPress);
-  // }
 });
 
 // Listens for clicks on the 'ham' button to simulate eating food (increases health status).
@@ -255,6 +276,9 @@ phone.addEventListener("click", () => {
   console.log("you made a phone call");
   hero.social += 1;
 });
+
+// Listens for keydown "enter" or "spacebar" if:
+//
 
 // Functions
 
@@ -274,7 +298,6 @@ function startStatusBarTimers() {
   setInterval(() => {
     if (hero.hunger > 0) {
       hero.hunger -= 1;
-      console.log(`Hunger: ${hero.hunger}`);
     }
   }, 3000);
 
@@ -282,9 +305,22 @@ function startStatusBarTimers() {
   setInterval(() => {
     if (hero.social > 0) {
       hero.social -= 1;
-      console.log(`Hunger: ${hero.social}`);
     }
   }, 5000);
+}
+
+// Checks to see if there is an object beside the hero AND if the hero is trying to move in the direction of the object. Returns a value indicating whether or not we should update the coordinates of the hero.
+function checkForObstacles(object, keyDown) {
+  if (
+    (hero.x == object.x - 1 && hero.y == object.y && keyDown == "d") ||
+    (hero.x == object.x + 1 && hero.y == object.y && keyDown == "a") ||
+    (hero.x == object.x && hero.y == object.y - 1 && keyDown == "s") ||
+    (hero.x == object.x && hero.y == object.y + 1 && keyDown == "w")
+  ) {
+    return "don't move";
+  } else {
+    return "move";
+  }
 }
 
 // Need to create a loop where the hero sprite is constantly being refreshed on the canvas.
