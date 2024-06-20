@@ -8,6 +8,8 @@ const staticCtx = staticCanvas.getContext("2d");
 const gameObjectsArray = [];
 
 // Classes
+
+// Class for map.
 class Map {
   constructor(mapSrc, x, y) {
     this.mapSrc = mapSrc;
@@ -24,24 +26,8 @@ class Map {
   }
 }
 
-class StaticGameObject {
-  constructor(imageSrc, x, y) {
-    this.imageSrc = imageSrc;
-    this.x = x;
-    this.y = y;
-  }
-
-  generateSprite() {
-    const objectImg = new Image();
-    objectImg.src = this.imageSrc;
-    const x = this.x * 16 - 7;
-    const y = this.y * 16 - 16;
-    objectImg.onload = () => {
-      staticCtx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
-    };
-  }
-}
-class GameObject {
+// Class for players.
+class Player {
   constructor(imageSrc, x, y) {
     this.imageSrc = imageSrc;
     this.x = x;
@@ -77,48 +63,6 @@ class GameObject {
     };
   }
 
-  updateCoordinates(keyDown) {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    // this method needs to update this.x and this.y when wsad keys are pressed.
-    if (keyDown === "w" && this.y === 1) {
-      this.cutX = 0;
-      this.cutY = 32;
-      this.generateSprite();
-    } else if (keyDown === "w") {
-      this.y -= 1;
-      this.cutX = 0;
-      this.cutY = 32;
-      this.generateSprite();
-    } else if (keyDown === "a" && this.x === 0) {
-      this.cutX = 32;
-      this.cutY = 0;
-      this.generateSprite();
-    } else if (keyDown === "a") {
-      this.x -= 1;
-      this.cutX = 32;
-      this.cutY = 0;
-      this.generateSprite();
-    } else if (keyDown === "s" && this.y === 11) {
-      this.cutX = 32;
-      this.cutY = 32;
-      this.generateSprite();
-    } else if (keyDown === "s") {
-      this.y += 1;
-      this.cutX = 32;
-      this.cutY = 32;
-      this.generateSprite();
-    } else if (keyDown === "d" && this.x === 21) {
-      this.cutX = 0;
-      this.cutY = 0;
-      this.generateSprite();
-    } else if (keyDown === "d") {
-      this.x += 1;
-      this.cutX = 0;
-      this.cutY = 0;
-      this.generateSprite();
-    }
-  }
-
   turnInPlace(keyDown) {
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     if (keyDown === "w") {
@@ -140,10 +84,6 @@ class GameObject {
     }
   }
 
-  // On load, hunger needs to decrease every 5 seconds. (this is a set inteveral)
-  // If player eats, the players hunger levels (this.hunger) increases by 1.
-
-  // Every time this method is called, it will read the current the hunger property of the object and update the hunger sprite accordingly.
   loadHungerBar() {
     const hungerBar = new Image();
     hungerBar.src = "/images/hunger_status.png";
@@ -237,45 +177,87 @@ class GameObject {
   }
 }
 
+// Class for game objects.
+class GameObject {
+  constructor(imageSrc, x, y) {
+    this.imageSrc = imageSrc;
+    this.x = x;
+    this.y = y;
+  }
+
+  updatePosition(keyDown) {
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    if (keyDown === "w") {
+      this.y += 1;
+      this.generateSprite();
+    } else if (keyDown === "s") {
+      this.y -= 1;
+      this.generateSprite();
+    } else if (keyDown === "a") {
+      this.x += 1;
+      this.generateSprite();
+    } else if (keyDown === "d") {
+      this.x -= 1;
+      this.generateSprite();
+    }
+  }
+
+  generateSprite() {
+    const objectImg = new Image();
+    objectImg.src = this.imageSrc;
+    const x = this.x * 16 - 7;
+    const y = this.y * 16 - 16;
+    objectImg.onload = () => {
+      ctx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
+    };
+  }
+}
+
 // Event Listeners
 
-// Listens w, s, a, d keys to move the character.
 document.addEventListener("keydown", function (event) {
   const keyDown = event.key.toLowerCase();
-  let moveCharacter = [];
-  gameObjectsArray.forEach((object) => {
-    const movement = checkForObstacles(object, keyDown);
-    if (movement === "move") {
-      moveCharacter.push(true);
-    } else if (movement === "don't move") {
-      console.log("no move");
-      moveCharacter.push(false);
-    }
-  });
-
-  if (moveCharacter.includes(false)) {
-    hero.turnInPlace(keyDown);
-  } else if (
+  // if keyDown is wsad then move map, and all objects
+  if (
     keyDown === "w" ||
-    keyDown === "a" ||
     keyDown === "s" ||
+    keyDown === "a" ||
     keyDown === "d"
   ) {
-    hero.updateCoordinates(keyDown);
+    let spaceOccupied = [];
+    gameObjectsArray.forEach((object) => {
+      if (checkForCollisions(object, keyDown) === true) {
+        spaceOccupied.push(true);
+      } else if (checkForCollisions(object, keyDown) === false) {
+        spaceOccupied.push(false);
+      }
+    });
+    if (spaceOccupied.includes(true)) {
+      gameObjectsArray.forEach((object) => {
+        object.generateSprite();
+      });
+      hero.turnInPlace(keyDown);
+    } else if (spaceOccupied.includes(false)) {
+      gameObjectsArray.forEach((object) => {
+        object.updatePosition(keyDown);
+      });
+      hero.turnInPlace(keyDown);
+    }
   }
 });
 
-// Listens for clicks on the 'ham' button to simulate eating food (increases health status).
-// ham.addEventListener("click", () => {
-//   console.log("you ate food");
-//   hero.hunger += 1;
-// });
-
-// Listens for clicks on the 'phone' button to simulate making a phone call (increases social status).
-// phone.addEventListener("click", () => {
-//   console.log("you made a phone call");
-//   hero.social += 1;
-// });
+function checkForCollisions(object, keyDown) {
+  if (
+    (hero.x == object.x - 1 && hero.y == object.y && keyDown == "d") ||
+    (hero.x == object.x + 1 && hero.y == object.y && keyDown == "a") ||
+    (hero.x == object.x && hero.y == object.y - 1 && keyDown == "s") ||
+    (hero.x == object.x && hero.y == object.y + 1 && keyDown == "w")
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 // Listens for 'spacebar' and 'enter' to see if the character is beside either the food item, or the social item.
 document.addEventListener("keydown", (event) => {
@@ -318,20 +300,6 @@ function startStatusBarTimers() {
       hero.social -= 1;
     }
   }, 5000);
-}
-
-// Checks to see if there is an object beside the hero AND if the hero is trying to move in the direction of the object. Returns a value indicating whether or not we should update the coordinates of the hero.
-function checkForObstacles(object, keyDown) {
-  if (
-    (hero.x == object.x - 1 && hero.y == object.y && keyDown == "d") ||
-    (hero.x == object.x + 1 && hero.y == object.y && keyDown == "a") ||
-    (hero.x == object.x && hero.y == object.y - 1 && keyDown == "s") ||
-    (hero.x == object.x && hero.y == object.y + 1 && keyDown == "w")
-  ) {
-    return "don't move";
-  } else {
-    return "move";
-  }
 }
 
 // Replenishes hunger status

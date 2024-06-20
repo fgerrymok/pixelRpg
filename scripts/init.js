@@ -2,10 +2,10 @@
 
 // Creating new objects
 const map = new Map("/images/background_tiles.png", 0, 0);
-const hero = new GameObject("/images/dead_body.png", 5, 1);
-const ham = new StaticGameObject("/images/ham.png", 6, 6);
+const hero = new Player("/images/dead_body.png", 10, 6);
+const ham = new GameObject("/images/fridge.png", 6, 10);
 gameObjectsArray.push(ham);
-const phone = new StaticGameObject("/images/phone.png", 17, 6);
+const phone = new GameObject("/images/phone.png", 17, 6);
 gameObjectsArray.push(phone);
 
 // Generating sprites on canvas
