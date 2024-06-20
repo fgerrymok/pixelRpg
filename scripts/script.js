@@ -20,9 +20,29 @@ class Map {
   generateMap() {
     const gameMap = new Image();
     gameMap.src = this.mapSrc;
+    const x = this.x * 16;
+    const y = this.y * 16 - 16;
     gameMap.onload = () => {
-      staticCtx.drawImage(gameMap, this.x, this.y);
+      ctx.drawImage(gameMap, x, y);
+      console.log(x, y);
     };
+  }
+
+  updateMapPosition(keyDown) {
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    if (keyDown === "w") {
+      this.y += 1;
+      this.generateMap();
+    } else if (keyDown === "s") {
+      this.y -= 1;
+      this.generateMap();
+    } else if (keyDown === "a") {
+      this.x += 1;
+      this.generateMap();
+    } else if (keyDown === "d") {
+      this.x -= 1;
+      this.generateMap();
+    }
   }
 }
 
@@ -43,7 +63,7 @@ class Player {
     // create the hero image
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
-    const x = this.x * 16 - 7;
+    const x = this.x * 16;
     const y = this.y * 16 - 16;
     const spriteWidth = 32;
     const spriteHeight = 32;
@@ -205,7 +225,7 @@ class GameObject {
   generateSprite() {
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
-    const x = this.x * 16 - 7;
+    const x = this.x * 16;
     const y = this.y * 16 - 16;
     objectImg.onload = () => {
       ctx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
@@ -232,12 +252,19 @@ document.addEventListener("keydown", function (event) {
         spaceOccupied.push(false);
       }
     });
+    if (checkForWalls(keyDown) === true) {
+      spaceOccupied.push(true);
+    } else if (checkForWalls(keyDown) === false) {
+      spaceOccupied.push(false);
+    }
     if (spaceOccupied.includes(true)) {
+      map.generateMap();
       gameObjectsArray.forEach((object) => {
         object.generateSprite();
       });
       hero.turnInPlace(keyDown);
     } else if (spaceOccupied.includes(false)) {
+      map.updateMapPosition(keyDown);
       gameObjectsArray.forEach((object) => {
         object.updatePosition(keyDown);
       });
@@ -252,6 +279,19 @@ function checkForCollisions(object, keyDown) {
     (hero.x == object.x + 1 && hero.y == object.y && keyDown == "a") ||
     (hero.x == object.x && hero.y == object.y - 1 && keyDown == "s") ||
     (hero.x == object.x && hero.y == object.y + 1 && keyDown == "w")
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkForWalls(keyDown) {
+  if (
+    (map.y === 3 && keyDown === "w") ||
+    (map.y === -2 && keyDown === "s") ||
+    (map.x === 10 && keyDown === "a") ||
+    (map.x === -7 && keyDown === "d")
   ) {
     return true;
   } else {

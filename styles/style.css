@@ -1,5 +1,5 @@
 body {
-    background-color: blue;
+    background-color: white;
 }
 
 #game-container {
@@ -9,6 +9,7 @@ body {
     margin: 0 auto;
     transform: scale(3) translateY(40%);
     position: relative;
+    background-color: gray;
 }
 
 #game-canvas {
