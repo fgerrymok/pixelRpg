@@ -15,11 +15,12 @@ body {
 #game-canvas {
     image-rendering: pixelated;
     position: absolute;
-    z-index: 2;
 }
 
 #static-canvas {
     image-rendering: pixelated;
+    position: absolute;
+    z-index: 2;
 }
 
 #ham {
