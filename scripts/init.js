@@ -1,5 +1,21 @@
 "use strict";
 
+function loadAssets() {
+  const assets = [
+    "/images/gameBackgroundV2.png",
+    "/images/dead_body.png",
+    "/images/fridge.png",
+    "/images/phone.png",
+    "/images/bed.png",
+    "/images/dressor.png",
+  ];
+
+  assets.forEach((imageSrc) => {
+    const imageToLoad = new Image();
+    imageToLoad.src = imageSrc;
+  });
+}
+
 // Creating new objects
 const map = new Map("/images/gameBackgroundV2.png", 5, 4);
 const hero = new Player("/images/dead_body.png", 10, 6);
