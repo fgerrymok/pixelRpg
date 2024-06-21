@@ -57,20 +57,22 @@ class Player {
     this.social = 5;
     this.cutX = 0;
     this.cutY = 0;
+    // this.playerImg = new Image();
+    // this.playerImg.src = this.imageSrc;
   }
 
   generateSprite() {
     // create the hero image
-    const objectImg = new Image();
-    objectImg.src = this.imageSrc;
+    this.playerImg = new Image();
+    this.playerImg.src = this.imageSrc;
     const x = this.x * 16;
     const y = this.y * 16 - 16;
     const spriteWidth = 32;
     const spriteHeight = 32;
     // write the sprite sheet onto the ctx
-    objectImg.onload = () => {
+    this.playerImg.onload = () => {
       ctx.drawImage(
-        objectImg,
+        this.playerImg,
         this.cutX,
         this.cutY,
         spriteWidth,
@@ -288,10 +290,10 @@ function checkForCollisions(object, keyDown) {
 
 function checkForWalls(keyDown) {
   if (
-    (map.y === 3 && keyDown === "w") ||
-    (map.y === -2 && keyDown === "s") ||
+    (map.y === 4 && keyDown === "w") ||
+    (map.y === 1 && keyDown === "s") ||
     (map.x === 10 && keyDown === "a") ||
-    (map.x === -7 && keyDown === "d")
+    (map.x === 0 && keyDown === "d")
   ) {
     return true;
   } else {

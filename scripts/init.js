@@ -1,15 +1,15 @@
 "use strict";
 
 // Creating new objects
-const map = new Map("/images/gameBackground.png", 2, 2);
+const map = new Map("/images/gameBackgroundV2.png", 5, 4);
 const hero = new Player("/images/dead_body.png", 10, 6);
-const fridge = new GameObject("/images/fridge.png", 6, 5);
+const fridge = new GameObject("/images/fridge.png", 8, 6);
 gameObjectsArray.push(fridge);
-const phone = new GameObject("/images/phone.png", 4, 5);
+const phone = new GameObject("/images/phone.png", 6, 6);
 gameObjectsArray.push(phone);
-const bed = new GameObject("/images/bed.png", 16, 5);
+const bed = new GameObject("/images/bed.png", 12, 6);
 gameObjectsArray.push(bed);
-const dressor = new GameObject("/images/dressor.png", 18, 5);
+const dressor = new GameObject("/images/dressor.png", 14, 6);
 gameObjectsArray.push(dressor);
 
 // Generating sprites on canvas
