@@ -99,37 +99,22 @@ class GameObject {
     this.y = y;
   }
 
-  updatePosition(keyDown) {
-    // ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    if (keyDown === "w") {
-      this.y += 1;
-      this.generateSprite();
-    } else if (keyDown === "s") {
-      this.y -= 1;
-      this.generateSprite();
-    } else if (keyDown === "a") {
-      this.x += 1;
-      this.generateSprite();
-    } else if (keyDown === "d") {
-      this.x -= 1;
-      this.generateSprite();
-    }
-  }
-
   generateImage() {
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
   }
 
-  // generateSprite() {
-  //   const objectImg = new Image();
-  //   objectImg.src = this.imageSrc;
-  //   const x = this.x * 16;
-  //   const y = this.y * 16 - 16;
-  //   objectImg.onload = () => {
-  //     ctx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
-  //   };
-  // }
+  updatePosition(keyDown) {
+    if (keyDown === "w") {
+      this.y += 1;
+    } else if (keyDown === "s") {
+      this.y -= 1;
+    } else if (keyDown === "a") {
+      this.x += 1;
+    } else if (keyDown === "d") {
+      this.x -= 1;
+    }
+  }
 }
 
 // Event Listeners
@@ -257,11 +242,9 @@ function loadGameAssets() {
     ctx.drawImage(gameMap, map.x * 16, map.y * 16);
 
     // draw game objects
-
-    imagesArray.forEach((image) => {
-      ctx.drawImage(image);
+    gameObjectsArray.forEach((object) => {
+      ctx.drawImage(object.image, object.x * 16, object.y * 16);
     });
-    // for each image in the array of images, draw that image with the updated position
   }, 100);
 }
 

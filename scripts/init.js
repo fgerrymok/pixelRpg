@@ -33,7 +33,6 @@ gameMap.src = "/images/gameBackgroundV2.png";
 const map = new Map(5, 4);
 const hero = new Player("/images/dead_body.png", 10, 6);
 const fridge = new GameObject("/images/fridge.png", 8, 6);
-fridge.generateImage();
 gameObjectsArray.push(fridge);
 const phone = new GameObject("/images/phone.png", 6, 6);
 gameObjectsArray.push(phone);
@@ -41,6 +40,12 @@ const bed = new GameObject("/images/bed.png", 12, 6);
 gameObjectsArray.push(bed);
 const dressor = new GameObject("/images/dressor.png", 14, 6);
 gameObjectsArray.push(dressor);
+
+// Creating a new Image for each object
+gameObjectsArray.forEach((object) => {
+  object.image = new Image();
+  object.image.src = object.imageSrc;
+});
 
 // Generating sprites on canvas
 // hero.generateSprite();
