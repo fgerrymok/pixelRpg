@@ -6,42 +6,26 @@ const ctx = gameCanvas.getContext("2d");
 const staticCanvas = document.getElementById("static-canvas");
 const staticCtx = staticCanvas.getContext("2d");
 const gameObjectsArray = [];
+const imagesArray = [];
 
 // Classes
 
 // Class for map.
 class Map {
-  constructor(mapSrc, x, y) {
-    this.mapSrc = mapSrc;
+  constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 
-  generateMap() {
-    const gameMap = new Image();
-    gameMap.src = this.mapSrc;
-    const x = this.x * 16;
-    const y = this.y * 16 - 16;
-    gameMap.onload = () => {
-      ctx.drawImage(gameMap, x, y);
-      console.log(x, y);
-    };
-  }
-
   updateMapPosition(keyDown) {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     if (keyDown === "w") {
       this.y += 1;
-      this.generateMap();
     } else if (keyDown === "s") {
       this.y -= 1;
-      this.generateMap();
     } else if (keyDown === "a") {
       this.x += 1;
-      this.generateMap();
     } else if (keyDown === "d") {
       this.x -= 1;
-      this.generateMap();
     }
   }
 }
@@ -86,7 +70,7 @@ class Player {
   }
 
   turnInPlace(keyDown) {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    // ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     if (keyDown === "w") {
       this.cutX = 0;
       this.cutY = 32;
@@ -105,98 +89,6 @@ class Player {
       this.generateSprite();
     }
   }
-
-  loadHungerBar() {
-    const hungerBar = new Image();
-    hungerBar.src = "/images/hunger_status.png";
-    const cutX = 0;
-    const cutY = 0;
-    hungerBar.onload = () => {
-      if (this.hunger === 5) {
-        staticCtx.drawImage(hungerBar, cutX, cutY, 80, 16, 3, 12, 80, 16);
-      } else if (this.hunger === 4) {
-        staticCtx.drawImage(hungerBar, cutX + 80, cutY, 80, 16, 3, 12, 80, 16);
-      } else if (this.hunger === 3) {
-        staticCtx.drawImage(hungerBar, cutX + 160, cutY, 80, 16, 3, 12, 80, 16);
-      } else if (this.hunger === 2) {
-        staticCtx.drawImage(hungerBar, cutX, cutY + 16, 80, 16, 3, 12, 80, 16);
-      } else if (this.hunger === 1) {
-        staticCtx.drawImage(
-          hungerBar,
-          cutX + 80,
-          cutY + 16,
-          80,
-          16,
-          3,
-          12,
-          80,
-          16
-        );
-      } else if (this.hunger === 0) {
-        staticCtx.drawImage(
-          hungerBar,
-          cutX + 160,
-          cutY + 16,
-          80,
-          16,
-          3,
-          12,
-          80,
-          16
-        );
-      }
-    };
-  }
-
-  loadSocialBar() {
-    const socialBar = new Image();
-    socialBar.src = "/images/social_status.png";
-    const cutX = 0;
-    const cutY = 0;
-    socialBar.onload = () => {
-      if (this.social === 5) {
-        staticCtx.drawImage(socialBar, cutX, cutY, 80, 16, 3, 23, 80, 16);
-      } else if (this.social === 4) {
-        staticCtx.drawImage(socialBar, cutX + 80, cutY, 80, 16, 3, 23, 80, 16);
-      } else if (this.social === 3) {
-        staticCtx.drawImage(socialBar, cutX + 160, cutY, 80, 16, 3, 23, 80, 16);
-      } else if (this.social === 2) {
-        staticCtx.drawImage(socialBar, cutX, cutY + 16, 80, 16, 3, 23, 80, 16);
-      } else if (this.social === 1) {
-        staticCtx.drawImage(
-          socialBar,
-          cutX + 80,
-          cutY + 16,
-          80,
-          16,
-          3,
-          23,
-          80,
-          16
-        );
-      } else if (this.social === 0) {
-        staticCtx.drawImage(
-          socialBar,
-          cutX + 160,
-          cutY + 16,
-          80,
-          16,
-          3,
-          23,
-          80,
-          16
-        );
-      }
-    };
-  }
-
-  loadHealthBar(cutX, cutY) {
-    const healthBar = new Image();
-    healthBar.src = "/images/health_status.png";
-    healthBar.onload = () => {
-      staticCtx.drawImage(healthBar, cutX, cutY, 80, 16, 3, 1, 80, 16);
-    };
-  }
 }
 
 // Class for game objects.
@@ -208,7 +100,7 @@ class GameObject {
   }
 
   updatePosition(keyDown) {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    // ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
     if (keyDown === "w") {
       this.y += 1;
       this.generateSprite();
@@ -224,15 +116,20 @@ class GameObject {
     }
   }
 
-  generateSprite() {
+  generateImage() {
     const objectImg = new Image();
     objectImg.src = this.imageSrc;
-    const x = this.x * 16;
-    const y = this.y * 16 - 16;
-    objectImg.onload = () => {
-      ctx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
-    };
   }
+
+  // generateSprite() {
+  //   const objectImg = new Image();
+  //   objectImg.src = this.imageSrc;
+  //   const x = this.x * 16;
+  //   const y = this.y * 16 - 16;
+  //   objectImg.onload = () => {
+  //     ctx.drawImage(objectImg, 0, 0, 32, 32, x, y, 32, 32);
+  //   };
+  // }
 }
 
 // Event Listeners
@@ -260,7 +157,6 @@ document.addEventListener("keydown", function (event) {
       spaceOccupied.push(false);
     }
     if (spaceOccupied.includes(true)) {
-      map.generateMap();
       gameObjectsArray.forEach((object) => {
         object.generateSprite();
       });
@@ -317,13 +213,55 @@ document.addEventListener("keydown", (event) => {
 
 // Functions
 
-// Runs a setInterval on the loadHungerBar method of hero every 0.1 seconds to check for changes in social and hunger status.
-function checkForChanges() {
+// Runs a setInterval that updates statusBars every 1/10 of a second.
+function loadGameAssets() {
   setInterval(() => {
-    hero.loadHungerBar();
-  }, 100);
-  setInterval(() => {
-    hero.loadSocialBar();
+    // clear canvases
+    staticCtx.clearRect(0, 0, staticCanvas.width, staticCanvas.height);
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+    // update hunger status bar
+    if (hero.hunger === 5) {
+      staticCtx.drawImage(hungerBar, 0, 0, 80, 16, 3, 12, 80, 16);
+    } else if (hero.hunger === 4) {
+      staticCtx.drawImage(hungerBar, 80, 0, 80, 16, 3, 12, 80, 16);
+    } else if (hero.hunger === 3) {
+      staticCtx.drawImage(hungerBar, 160, 0, 80, 16, 3, 12, 80, 16);
+    } else if (hero.hunger === 2) {
+      staticCtx.drawImage(hungerBar, 0, 16, 80, 16, 3, 12, 80, 16);
+    } else if (hero.hunger === 1) {
+      staticCtx.drawImage(hungerBar, 80, 16, 80, 16, 3, 12, 80, 16);
+    } else if (hero.hunger === 0) {
+      staticCtx.drawImage(hungerBar, 160, 16, 80, 16, 3, 12, 80, 16);
+    }
+
+    // updates social status bar
+    if (hero.social === 5) {
+      staticCtx.drawImage(socialBar, 0, 0, 80, 16, 3, 23, 80, 16);
+    } else if (hero.social === 4) {
+      staticCtx.drawImage(socialBar, 80, 0, 80, 16, 3, 23, 80, 16);
+    } else if (hero.social === 3) {
+      staticCtx.drawImage(socialBar, 160, 0, 80, 16, 3, 23, 80, 16);
+    } else if (hero.social === 2) {
+      staticCtx.drawImage(socialBar, 0, 16, 80, 16, 3, 23, 80, 16);
+    } else if (hero.social === 1) {
+      staticCtx.drawImage(socialBar, 80, 16, 80, 16, 3, 23, 80, 16);
+    } else if (hero.social === 0) {
+      staticCtx.drawImage(socialBar, 160, 16, 80, 16, 3, 23, 80, 16);
+    }
+
+    // update health bar (needs more code)
+    staticCtx.drawImage(healthBar, 0, 0, 80, 16, 3, 1, 80, 16);
+
+    // draw map
+    ctx.drawImage(gameMap, map.x * 16, map.y * 16);
+
+    // draw game objects
+
+    imagesArray.forEach((image) => {
+      ctx.drawImage(image);
+    });
+    // for each image in the array of images, draw that image with the updated position
   }, 100);
 }
 
@@ -346,14 +284,18 @@ function startStatusBarTimers() {
 
 // Replenishes hunger status
 function eatFood() {
-  console.log("you ate food");
-  hero.hunger += 1;
+  console.log(`Hunger: ${hero.hunger}`);
+  if (hero.hunger < 5) {
+    hero.hunger += 1;
+  }
 }
 
 // Replenishes social status
 function makePhoneCall() {
-  console.log("you made a phone call");
-  hero.social += 1;
+  console.log(`Social: ${hero.social}`);
+  if (hero.social < 5) {
+    hero.social += 1;
+  }
 }
 
 // Checks to see if the character is directly beside AND facing a game object. Accepts a number value to determine which object we would like to check for.
