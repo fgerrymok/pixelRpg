@@ -41,32 +41,6 @@ class Player {
     this.social = 5;
     this.cutX = 0;
     this.cutY = 0;
-    // this.playerImg = new Image();
-    // this.playerImg.src = this.imageSrc;
-  }
-
-  generateSprite() {
-    // create the hero image
-    this.playerImg = new Image();
-    this.playerImg.src = this.imageSrc;
-    const x = this.x * 16;
-    const y = this.y * 16 - 16;
-    const spriteWidth = 32;
-    const spriteHeight = 32;
-    // write the sprite sheet onto the ctx
-    this.playerImg.onload = () => {
-      ctx.drawImage(
-        this.playerImg,
-        this.cutX,
-        this.cutY,
-        spriteWidth,
-        spriteHeight,
-        x,
-        y,
-        spriteWidth,
-        spriteHeight
-      );
-    };
   }
 
   turnInPlace(keyDown) {
@@ -74,19 +48,15 @@ class Player {
     if (keyDown === "w") {
       this.cutX = 0;
       this.cutY = 32;
-      this.generateSprite();
     } else if (keyDown === "a") {
       this.cutX = 32;
       this.cutY = 0;
-      this.generateSprite();
     } else if (keyDown === "s") {
       this.cutX = 32;
       this.cutY = 32;
-      this.generateSprite();
     } else if (keyDown === "d") {
       this.cutX = 0;
       this.cutY = 0;
-      this.generateSprite();
     }
   }
 }
@@ -142,9 +112,7 @@ document.addEventListener("keydown", function (event) {
       spaceOccupied.push(false);
     }
     if (spaceOccupied.includes(true)) {
-      gameObjectsArray.forEach((object) => {
-        object.generateSprite();
-      });
+      gameObjectsArray.forEach((object) => {});
       hero.turnInPlace(keyDown);
     } else if (spaceOccupied.includes(false)) {
       map.updateMapPosition(keyDown);
@@ -245,6 +213,19 @@ function loadGameAssets() {
     gameObjectsArray.forEach((object) => {
       ctx.drawImage(object.image, object.x * 16, object.y * 16);
     });
+
+    // draw hero
+    ctx.drawImage(
+      hero.image,
+      hero.cutX,
+      hero.cutY,
+      32,
+      32,
+      hero.x * 16,
+      hero.y * 16,
+      32,
+      32
+    );
   }, 100);
 }
 

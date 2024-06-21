@@ -29,9 +29,15 @@ gameMap.src = "/images/gameBackgroundV2.png";
 //   });
 // }
 
-// Creating new objects
+// Map
 const map = new Map(5, 4);
+
+// Player
 const hero = new Player("/images/dead_body.png", 10, 6);
+hero.image = new Image();
+hero.image.src = hero.imageSrc;
+
+// Creating game objects and pushing to an array
 const fridge = new GameObject("/images/fridge.png", 8, 6);
 gameObjectsArray.push(fridge);
 const phone = new GameObject("/images/phone.png", 6, 6);
@@ -46,13 +52,6 @@ gameObjectsArray.forEach((object) => {
   object.image = new Image();
   object.image.src = object.imageSrc;
 });
-
-// Generating sprites on canvas
-// hero.generateSprite();
-// fridge.generateSprite();
-// phone.generateSprite();
-// bed.generateSprite();
-// dressor.generateSprite();
 
 // Set interval that redraws status bars every 0.1 seconds
 loadGameAssets();
