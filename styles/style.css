@@ -1,43 +1,48 @@
 body {
-    background-color: white;
+  background-color: white;
 }
 
 #game-container {
-    width: 22rem;
-    height: 12.375rem;
-    border: 1px solid black;
-    margin: 0 auto;
-    transform: scale(3) translateY(40%);
-    position: relative;
-    background-color: gray;
+  width: 22rem;
+  height: 12.375rem;
+  border: 1px solid black;
+  margin: 0 auto;
+  transform: scale(3) translateY(40%);
+  position: relative;
+  background-color: gray;
 }
 
 #game-canvas {
-    image-rendering: pixelated;
-    position: absolute;
+  image-rendering: pixelated;
+  position: absolute;
 }
 
 #static-canvas {
-    image-rendering: pixelated;
-    position: absolute;
-    z-index: 2;
+  image-rendering: pixelated;
+  position: absolute;
+  z-index: 2;
 }
 
 #ham {
-    position: absolute;
-    z-index: 3;
-    right: 0;
-    top: 0.5rem;
-    width: 3rem;
-    font-size: 0.5rem;
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  top: 0.5rem;
+  width: 3rem;
+  font-size: 0.5rem;
 }
 
 #phone {
-    position: absolute;
-    z-index: 3;
-    top: 2.5rem;
-    right: 0;
-    width: 3rem;
-    font-size: 0.5rem;
+  position: absolute;
+  z-index: 3;
+  top: 2.5rem;
+  right: 0;
+  width: 3rem;
+  font-size: 0.5rem;
 }
 
+#losing-screen {
+  position: absolute;
+  z-index: 3;
+  display: none;
+}

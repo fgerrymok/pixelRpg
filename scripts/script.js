@@ -7,6 +7,7 @@ const staticCanvas = document.getElementById("static-canvas");
 const staticCtx = staticCanvas.getContext("2d");
 const gameObjectsArray = [];
 const imagesArray = [];
+const losingScreen = document.getElementById("losing-screen");
 
 // Classes
 
@@ -312,4 +313,12 @@ function checkHealth() {
       }, 2000);
     }
   }, 100);
+}
+
+function checkPlayerState() {
+  setInterval(() => {
+    if (hero.health === 0) {
+      losingScreen.style.display = "block";
+    }
+  });
 }

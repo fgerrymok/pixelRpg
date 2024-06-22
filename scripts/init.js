@@ -59,3 +59,5 @@ loadGameAssets();
 startStatusBarTimers();
 // Initiates a set interval to check for whether or not to start reducing the player's health
 checkHealth();
+// Checks the win / loss conditions
+checkPlayerState();
