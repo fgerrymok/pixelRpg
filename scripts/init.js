@@ -57,3 +57,5 @@ gameObjectsArray.forEach((object) => {
 loadGameAssets();
 // Initiates status bar countdown
 startStatusBarTimers();
+// Initiates a set interval to check for whether or not to start reducing the player's health
+checkHealth();

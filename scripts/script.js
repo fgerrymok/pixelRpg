@@ -203,8 +203,20 @@ function loadGameAssets() {
       staticCtx.drawImage(socialBar, 160, 16, 80, 16, 3, 23, 80, 16);
     }
 
-    // update health bar (needs more code)
-    staticCtx.drawImage(healthBar, 0, 0, 80, 16, 3, 1, 80, 16);
+    // updates health status bar
+    if (hero.health === 5) {
+      staticCtx.drawImage(healthBar, 0, 0, 80, 16, 3, 1, 80, 16);
+    } else if (hero.health === 4) {
+      staticCtx.drawImage(healthBar, 80, 0, 80, 16, 3, 1, 80, 16);
+    } else if (hero.health === 3) {
+      staticCtx.drawImage(healthBar, 160, 0, 80, 16, 3, 1, 80, 16);
+    } else if (hero.health === 2) {
+      staticCtx.drawImage(healthBar, 0, 16, 80, 16, 3, 1, 80, 16);
+    } else if (hero.health === 1) {
+      staticCtx.drawImage(healthBar, 80, 16, 80, 16, 3, 1, 80, 16);
+    } else if (hero.health === 0) {
+      staticCtx.drawImage(healthBar, 160, 16, 80, 16, 3, 1, 80, 16);
+    }
 
     // draw map
     ctx.drawImage(gameMap, map.x * 16, map.y * 16);
@@ -236,7 +248,7 @@ function startStatusBarTimers() {
     if (hero.hunger > 0) {
       hero.hunger -= 1;
     }
-  }, 3000);
+  }, 1000);
 
   // Social Status Timer
   setInterval(() => {
@@ -262,7 +274,7 @@ function makePhoneCall() {
   }
 }
 
-// Checks to see if the character is directly beside AND facing a game object. Accepts a number value to determine which object we would like to check for.
+// Checks to see if the character is directly beside AND facing a game object. Accepts an integer value to determine which object we would like to check for.
 function checkIfBesideAndFacingObject(index) {
   if (
     (hero.x == gameObjectsArray[index].x - 1 &&
@@ -283,4 +295,21 @@ function checkIfBesideAndFacingObject(index) {
       hero.cutY == 32)
   )
     return true;
+}
+
+// Recursive function that starts a setInterval to check if hunger or social are at zero. If so, another setInterval is started to reduce hunger, but only if hunger or social remain at zero. The function is called again within itself if player eats or makes a call.
+function checkHealth() {
+  const checkHealthHandler = setInterval(() => {
+    if (hero.hunger === 0 || hero.social === 0) {
+      clearInterval(checkHealthHandler);
+      const decreaseHealthHandler = setInterval(() => {
+        if ((hero.hunger === 0 || hero.social === 0) && hero.health > 0) {
+          hero.health -= 1;
+        } else {
+          clearInterval(decreaseHealthHandler);
+          checkHealth();
+        }
+      }, 2000);
+    }
+  }, 100);
 }
