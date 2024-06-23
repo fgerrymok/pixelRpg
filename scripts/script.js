@@ -8,6 +8,7 @@ const staticCtx = staticCanvas.getContext("2d");
 const gameObjectsArray = [];
 const imagesArray = [];
 const losingScreen = document.getElementById("losing-screen");
+const winningScreen = document.getElementById("winning-screen");
 
 // Classes
 
@@ -353,6 +354,11 @@ function checkPlayerState() {
   setInterval(() => {
     if (hero.health === 0) {
       losingScreen.style.display = "block";
+    }
+  });
+  setInterval(() => {
+    if (hero.progress === 9) {
+      winningScreen.style.display = "block";
     }
   });
 }

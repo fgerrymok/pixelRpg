@@ -46,3 +46,9 @@ body {
   z-index: 3;
   display: none;
 }
+
+#winning-screen {
+  position: absolute;
+  z-index: 3;
+  display: none;
+}
