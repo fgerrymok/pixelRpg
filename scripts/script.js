@@ -9,6 +9,7 @@ const gameObjectsArray = [];
 const imagesArray = [];
 const losingScreen = document.getElementById("losing-screen");
 const winningScreen = document.getElementById("winning-screen");
+const moneyOutput = document.getElementById("money-output");
 
 // Classes
 
@@ -38,12 +39,14 @@ class Player {
     this.imageSrc = imageSrc;
     this.x = x;
     this.y = y;
+    this.cutX = 0;
+    this.cutY = 0;
     this.health = 5;
     this.hunger = 5;
     this.social = 5;
-    this.progress = 0;
-    this.cutX = 0;
-    this.cutY = 0;
+    this.relationshipProgress = 0;
+    this.money = 0;
+    this.workProgress = 0;
   }
 
   turnInPlace(keyDown) {
@@ -142,8 +145,8 @@ function checkForCollisions(object, keyDown) {
 
 function checkForWalls(keyDown) {
   if (
-    (map.y === 4 && keyDown === "w") ||
-    (map.y === 1 && keyDown === "s") ||
+    (map.y === 3 && keyDown === "w") ||
+    (map.y === 0 && keyDown === "s") ||
     (map.x === 10 && keyDown === "a") ||
     (map.x === 0 && keyDown === "d")
   ) {
@@ -164,8 +167,8 @@ document.addEventListener("keydown", (event) => {
       eatFood();
     } else if (besideAndFacingPhone === true) {
       makePhoneCall();
-    } else if (besideAndFacingComputer === true) {
-      workOnGame();
+    } else if (besideAndFacingComputer === true && hero.workProgress === 0) {
+      work();
     }
   }
 });
@@ -224,27 +227,202 @@ function loadGameAssets() {
       staticCtx.drawImage(healthBar, 160, 16, 80, 16, 3, 1, 80, 16);
     }
 
-    // update progress bar
-    if (hero.progress === 0) {
-      staticCtx.drawImage(progressBar, 0, 0, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 1) {
-      staticCtx.drawImage(progressBar, 0, 32, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 2) {
-      staticCtx.drawImage(progressBar, 0, 64, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 3) {
-      staticCtx.drawImage(progressBar, 0, 96, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 4) {
-      staticCtx.drawImage(progressBar, 0, 128, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 5) {
-      staticCtx.drawImage(progressBar, 234, 0, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 6) {
-      staticCtx.drawImage(progressBar, 234, 32, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 7) {
-      staticCtx.drawImage(progressBar, 234, 64, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 8) {
-      staticCtx.drawImage(progressBar, 234, 96, 234, 32, 117, 0, 234, 32);
-    } else if (hero.progress === 9) {
-      staticCtx.drawImage(progressBar, 234, 128, 234, 32, 117, 0, 234, 32);
+    // update relationship progress bar
+    if (hero.relationshipProgress === 0) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        0,
+        0,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 1) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        0,
+        32,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 2) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        0,
+        64,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 3) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        0,
+        96,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 4) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        0,
+        128,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 5) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        234,
+        0,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 6) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        234,
+        32,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 7) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        234,
+        64,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 8) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        234,
+        96,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    } else if (hero.relationshipProgress === 9) {
+      staticCtx.drawImage(
+        relationshipProgressBar,
+        234,
+        128,
+        234,
+        32,
+        117,
+        0,
+        234,
+        32
+      );
+    }
+
+    // loads work progress bar
+    if (hero.workProgress > 0 && hero.workProgress <= 1) {
+      staticCtx.drawImage(
+        workProgressBar,
+        0,
+        0,
+        32,
+        16,
+        10 * 16,
+        4.5 * 16,
+        32,
+        16
+      );
+    } else if (hero.workProgress > 1 && hero.workProgress <= 2) {
+      staticCtx.drawImage(
+        workProgressBar,
+        32,
+        0,
+        32,
+        16,
+        10 * 16,
+        4.5 * 16,
+        32,
+        16
+      );
+    } else if (hero.workProgress > 2 && hero.workProgress <= 3) {
+      staticCtx.drawImage(
+        workProgressBar,
+        64,
+        0,
+        32,
+        16,
+        10 * 16,
+        4.5 * 16,
+        32,
+        16
+      );
+    } else if (hero.workProgress > 3 && hero.workProgress <= 4) {
+      staticCtx.drawImage(
+        workProgressBar,
+        0,
+        16,
+        32,
+        16,
+        10 * 16,
+        4.5 * 16,
+        32,
+        16
+      );
+    } else if (hero.workProgress > 4 && hero.workProgress <= 5) {
+      staticCtx.drawImage(
+        workProgressBar,
+        32,
+        16,
+        32,
+        16,
+        10 * 16,
+        4.5 * 16,
+        32,
+        16
+      );
+    } else if (hero.workProgress > 5 && hero.workProgress <= 6) {
+      staticCtx.drawImage(
+        workProgressBar,
+        64,
+        16,
+        32,
+        16,
+        10 * 16,
+        4.5 * 16,
+        32,
+        16
+      );
     }
 
     // draw map
@@ -277,37 +455,51 @@ function startStatusBarTimers() {
     if (hero.hunger > 0) {
       hero.hunger -= 1;
     }
-  }, 1000);
+  }, 8000);
 
   // Social Status Timer
   setInterval(() => {
     if (hero.social > 0) {
       hero.social -= 1;
     }
-  }, 5000);
+  }, 1000000);
 }
 
 // Replenishes hunger status
 function eatFood() {
-  console.log(`Hunger: ${hero.hunger}`);
-  if (hero.hunger < 5) {
+  if (hero.hunger < 5 && hero.money >= 10) {
     hero.hunger += 1;
+    hero.money -= 10;
+    moneyOutput.innerText = `$${hero.money}`;
   }
 }
 
 // Replenishes social status
 function makePhoneCall() {
-  console.log(`Social: ${hero.social}`);
-  if (hero.social < 5) {
-    hero.social += 1;
+  if (hero.relationshipProgress < 9) {
+    hero.relationshipProgress += 1;
   }
 }
 
-// Increases progress bar
-function workOnGame() {
-  if (hero.progress < 9) {
-    hero.progress += 1;
-  }
+// Increases money
+function work() {
+  const workProgressBarHandler = setInterval(() => {
+    const besideAndFacingComputer = checkIfBesideAndFacingObject(4);
+    if (besideAndFacingComputer === true) {
+      hero.workProgress += 0.1;
+    } else {
+      clearInterval(workProgressBarHandler);
+      clearTimeout(workTimeoutHandler);
+      hero.workProgress = 0;
+    }
+    console.log(hero.workProgress);
+  }, 100);
+  const workTimeoutHandler = setTimeout(() => {
+    hero.money += 10;
+    moneyOutput.innerText = `$${hero.money}`;
+    clearInterval(workProgressBarHandler);
+    hero.workProgress = 0;
+  }, 5300);
 }
 
 // Checks to see if the character is directly beside AND facing a game object. Accepts an integer value to determine which object we would like to check for.
@@ -357,7 +549,7 @@ function checkPlayerState() {
     }
   });
   setInterval(() => {
-    if (hero.progress === 9) {
+    if (hero.relationshipProgress === 9) {
       winningScreen.style.display = "block";
     }
   });

@@ -43,12 +43,21 @@ body {
 
 #losing-screen {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   display: none;
 }
 
 #winning-screen {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   display: none;
+}
+
+#money-output {
+  margin: 0;
+  font-size: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
 }

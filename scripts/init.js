@@ -10,8 +10,11 @@ socialBar.src = "/images/social_status.png";
 const healthBar = new Image();
 healthBar.src = "/images/health_status.png";
 
-const progressBar = new Image();
-progressBar.src = "/images/progress-bar.png";
+const relationshipProgressBar = new Image();
+relationshipProgressBar.src = "/images/relationship-progress-bar.png";
+
+const workProgressBar = new Image();
+workProgressBar.src = "/images/mini-progress.png";
 
 const gameMap = new Image();
 gameMap.src = "/images/gameBackgroundV2.png";
@@ -33,23 +36,23 @@ gameMap.src = "/images/gameBackgroundV2.png";
 // }
 
 // Map
-const map = new Map(5, 4);
+const map = new Map(5, 2);
 
 // Player
-const hero = new Player("/images/dead_body.png", 10, 6);
+const hero = new Player("/images/dead_body.png", 10, 5);
 hero.image = new Image();
 hero.image.src = hero.imageSrc;
 
 // Creating game objects and pushing to an array
-const fridge = new GameObject("/images/fridge.png", 8, 6);
+const fridge = new GameObject("/images/fridge.png", 8, 4);
 gameObjectsArray.push(fridge);
-const phone = new GameObject("/images/phone.png", 6, 6);
+const phone = new GameObject("/images/phone.png", 6, 4);
 gameObjectsArray.push(phone);
-const bed = new GameObject("/images/bed.png", 12, 6);
+const bed = new GameObject("/images/bed.png", 12, 4);
 gameObjectsArray.push(bed);
-const dressor = new GameObject("/images/dressor.png", 14, 6);
+const dressor = new GameObject("/images/dressor.png", 14, 4);
 gameObjectsArray.push(dressor);
-const computer = new GameObject("/images/computer.png", 10, 6);
+const computer = new GameObject("/images/computer.png", 10, 4);
 gameObjectsArray.push(computer);
 
 // Creating a new Image for each object
