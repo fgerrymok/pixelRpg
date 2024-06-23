@@ -81,16 +81,32 @@ h1 {
   background-color: beige;
 }
 
-#game-rules,
+#game-rules {
+  width: 75%;
+}
+
 #start-game-button-section {
-  width: 50%;
+  position: relative;
+  width: 25%;
+}
+
+button {
+  position: absolute;
+  left: 0.8rem;
+  bottom: 0.1rem;
 }
 
 h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0;
+  padding-left: 2rem;
 }
 
-p {
-  font-size: 0.5rem;
+li {
+  font-size: 0.4rem;
+}
+
+.instructional-images {
+  image-rendering: pixelated;
+  transform: scale(0.5) translateY(60%);
 }
