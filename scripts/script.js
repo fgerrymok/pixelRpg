@@ -44,7 +44,7 @@ class Player {
     this.health = 5;
     this.hunger = 5;
     this.social = 5;
-    this.relationshipProgress = 0;
+    this.overallProgress = 0;
     this.money = 0;
     this.workProgress = 0;
   }
@@ -182,6 +182,9 @@ function loadGameAssets() {
     staticCtx.clearRect(0, 0, staticCanvas.width, staticCanvas.height);
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
+    // load money counter
+    staticCtx.drawImage(moneyCounter, 0, 0, 48, 16, 296, 8, 48, 16);
+
     // update hunger status bar
     if (hero.hunger === 5) {
       staticCtx.drawImage(hungerBar, 0, 0, 80, 16, 3, 12, 80, 16);
@@ -227,123 +230,33 @@ function loadGameAssets() {
       staticCtx.drawImage(healthBar, 160, 16, 80, 16, 3, 1, 80, 16);
     }
 
-    // update relationship progress bar
-    if (hero.relationshipProgress === 0) {
+    // Update overall progress bar
+    if (hero.overallProgress === 0) {
+      staticCtx.drawImage(overallProgressBar, 0, 0, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 1) {
+      staticCtx.drawImage(overallProgressBar, 0, 32, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 2) {
+      staticCtx.drawImage(overallProgressBar, 0, 64, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 3) {
+      staticCtx.drawImage(overallProgressBar, 0, 96, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 4) {
+      staticCtx.drawImage(overallProgressBar, 0, 128, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 5) {
+      staticCtx.drawImage(overallProgressBar, 234, 0, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 6) {
+      staticCtx.drawImage(overallProgressBar, 234, 32, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 7) {
+      staticCtx.drawImage(overallProgressBar, 234, 64, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 8) {
+      staticCtx.drawImage(overallProgressBar, 234, 96, 234, 32, 65, 0, 234, 32);
+    } else if (hero.overallProgress === 9) {
       staticCtx.drawImage(
-        relationshipProgressBar,
-        0,
-        0,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 1) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        0,
-        32,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 2) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        0,
-        64,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 3) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        0,
-        96,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 4) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        0,
-        128,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 5) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        234,
-        0,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 6) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        234,
-        32,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 7) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        234,
-        64,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 8) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
-        234,
-        96,
-        234,
-        32,
-        117,
-        0,
-        234,
-        32
-      );
-    } else if (hero.relationshipProgress === 9) {
-      staticCtx.drawImage(
-        relationshipProgressBar,
+        overallProgressBar,
         234,
         128,
         234,
         32,
-        117,
+        65,
         0,
         234,
         32
@@ -455,14 +368,14 @@ function startStatusBarTimers() {
     if (hero.hunger > 0) {
       hero.hunger -= 1;
     }
-  }, 8000);
+  }, 7000);
 
   // Social Status Timer
   setInterval(() => {
     if (hero.social > 0) {
       hero.social -= 1;
     }
-  }, 1000000);
+  }, 4000);
 }
 
 // Replenishes hunger status
@@ -476,8 +389,8 @@ function eatFood() {
 
 // Replenishes social status
 function makePhoneCall() {
-  if (hero.relationshipProgress < 9) {
-    hero.relationshipProgress += 1;
+  if (hero.social < 5) {
+    hero.social += 1;
   }
 }
 
@@ -495,7 +408,8 @@ function work() {
     console.log(hero.workProgress);
   }, 100);
   const workTimeoutHandler = setTimeout(() => {
-    hero.money += 10;
+    hero.money += 15;
+    hero.overallProgress += 1;
     moneyOutput.innerText = `$${hero.money}`;
     clearInterval(workProgressBarHandler);
     hero.workProgress = 0;
@@ -549,7 +463,7 @@ function checkPlayerState() {
     }
   });
   setInterval(() => {
-    if (hero.relationshipProgress === 9) {
+    if (hero.overallProgress === 9) {
       winningScreen.style.display = "block";
     }
   });

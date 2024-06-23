@@ -55,9 +55,17 @@ body {
 
 #money-output {
   margin: 0;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0.66rem;
+  right: 1.1rem;
   z-index: 3;
 }
+
+/* #start-screen {
+  position: absolute;
+  z-index: 4;
+  width: 352px;
+  height: 198px;
+  background-color: gray;
+} */

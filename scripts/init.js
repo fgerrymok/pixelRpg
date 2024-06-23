@@ -10,14 +10,17 @@ socialBar.src = "/images/social_status.png";
 const healthBar = new Image();
 healthBar.src = "/images/health_status.png";
 
-const relationshipProgressBar = new Image();
-relationshipProgressBar.src = "/images/relationship-progress-bar.png";
+const overallProgressBar = new Image();
+overallProgressBar.src = "/images/progress-bar.png";
 
 const workProgressBar = new Image();
 workProgressBar.src = "/images/mini-progress.png";
 
+const moneyCounter = new Image();
+moneyCounter.src = "/images/money.png";
+
 const gameMap = new Image();
-gameMap.src = "/images/gameBackgroundV2.png";
+gameMap.src = "/images/gameBackgroundV3.png";
 
 // function loadAssets() {
 //   const assets = [
@@ -52,7 +55,7 @@ const bed = new GameObject("/images/bed.png", 12, 4);
 gameObjectsArray.push(bed);
 const dressor = new GameObject("/images/dressor.png", 14, 4);
 gameObjectsArray.push(dressor);
-const computer = new GameObject("/images/computer.png", 10, 4);
+const computer = new GameObject("/images/desktop-off.png", 10, 4);
 gameObjectsArray.push(computer);
 
 // Creating a new Image for each object
