@@ -10,6 +10,9 @@ socialBar.src = "/images/social_status.png";
 const healthBar = new Image();
 healthBar.src = "/images/health_status.png";
 
+const progressBar = new Image();
+progressBar.src = "/images/progress-bar.png";
+
 const gameMap = new Image();
 gameMap.src = "/images/gameBackgroundV2.png";
 
@@ -46,6 +49,8 @@ const bed = new GameObject("/images/bed.png", 12, 6);
 gameObjectsArray.push(bed);
 const dressor = new GameObject("/images/dressor.png", 14, 6);
 gameObjectsArray.push(dressor);
+const computer = new GameObject("/images/computer.png", 10, 6);
+gameObjectsArray.push(computer);
 
 // Creating a new Image for each object
 gameObjectsArray.forEach((object) => {

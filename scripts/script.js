@@ -40,6 +40,7 @@ class Player {
     this.health = 5;
     this.hunger = 5;
     this.social = 5;
+    this.progress = 0;
     this.cutX = 0;
     this.cutY = 0;
   }
@@ -157,10 +158,13 @@ document.addEventListener("keydown", (event) => {
   if (keyDown === " " || keyDown === "Enter") {
     const besideAndFacingFood = checkIfBesideAndFacingObject(0);
     const besideAndFacingPhone = checkIfBesideAndFacingObject(1);
+    const besideAndFacingComputer = checkIfBesideAndFacingObject(4);
     if (besideAndFacingFood === true) {
       eatFood();
     } else if (besideAndFacingPhone === true) {
       makePhoneCall();
+    } else if (besideAndFacingComputer === true) {
+      workOnGame();
     }
   }
 });
@@ -219,6 +223,29 @@ function loadGameAssets() {
       staticCtx.drawImage(healthBar, 160, 16, 80, 16, 3, 1, 80, 16);
     }
 
+    // update progress bar
+    if (hero.progress === 0) {
+      staticCtx.drawImage(progressBar, 0, 0, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 1) {
+      staticCtx.drawImage(progressBar, 0, 32, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 2) {
+      staticCtx.drawImage(progressBar, 0, 64, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 3) {
+      staticCtx.drawImage(progressBar, 0, 96, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 4) {
+      staticCtx.drawImage(progressBar, 0, 128, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 5) {
+      staticCtx.drawImage(progressBar, 234, 0, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 6) {
+      staticCtx.drawImage(progressBar, 234, 32, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 7) {
+      staticCtx.drawImage(progressBar, 234, 64, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 8) {
+      staticCtx.drawImage(progressBar, 234, 96, 234, 32, 117, 0, 234, 32);
+    } else if (hero.progress === 9) {
+      staticCtx.drawImage(progressBar, 234, 128, 234, 32, 117, 0, 234, 32);
+    }
+
     // draw map
     ctx.drawImage(gameMap, map.x * 16, map.y * 16);
 
@@ -272,6 +299,13 @@ function makePhoneCall() {
   console.log(`Social: ${hero.social}`);
   if (hero.social < 5) {
     hero.social += 1;
+  }
+}
+
+// Increases progress bar
+function workOnGame() {
+  if (hero.progress < 9) {
+    hero.progress += 1;
   }
 }
 
