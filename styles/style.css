@@ -62,10 +62,35 @@ body {
   z-index: 3;
 }
 
-/* #start-screen {
+#start-screen {
   position: absolute;
   z-index: 4;
   width: 352px;
   height: 198px;
   background-color: gray;
-} */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+h1 {
+  font-size: 1.3rem;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  background-color: beige;
+}
+
+#game-rules,
+#start-game-button-section {
+  width: 50%;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+p {
+  font-size: 0.5rem;
+}

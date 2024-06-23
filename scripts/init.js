@@ -1,5 +1,7 @@
 "use strict";
 
+const startScreen = document.getElementById("start-screen");
+
 // Load all images
 const hungerBar = new Image();
 hungerBar.src = "/images/hunger_status.png";
@@ -19,32 +21,15 @@ workProgressBar.src = "/images/mini-progress.png";
 const moneyCounter = new Image();
 moneyCounter.src = "/images/money.png";
 
-const gameMap = new Image();
-gameMap.src = "/images/gameBackgroundV3.png";
-
-// function loadAssets() {
-//   const assets = [
-//     "/images/gameBackgroundV2.png",
-//     "/images/dead_body.png",
-//     "/images/fridge.png",
-//     "/images/phone.png",
-//     "/images/bed.png",
-//     "/images/dressor.png",
-//   ];
-
-//   assets.forEach((imageSrc) => {
-//     const imageToLoad = new Image();
-//     imageToLoad.src = imageSrc;
-//   });
-// }
-
-// Map
-const map = new Map(5, 2);
-
 // Player
 const hero = new Player("/images/dead_body.png", 10, 5);
 hero.image = new Image();
 hero.image.src = hero.imageSrc;
+
+// Map
+const map = new Map(5, 2);
+const gameMap = new Image();
+gameMap.src = "/images/gameBackgroundV3.png";
 
 // Creating game objects and pushing to an array
 const fridge = new GameObject("/images/fridge.png", 8, 4);
@@ -64,11 +49,30 @@ gameObjectsArray.forEach((object) => {
   object.image.src = object.imageSrc;
 });
 
-// Set interval that redraws status bars every 0.1 seconds
-loadGameAssets();
-// Initiates status bar countdown
-startStatusBarTimers();
-// Initiates a set interval to check for whether or not to start reducing the player's health
-checkHealth();
-// Checks the win / loss conditions
-checkPlayerState();
+function startGame() {
+  startScreen.style.display = "none";
+  // Set interval that redraws status bars every 0.1 seconds
+  loadGameAssets();
+  // Initiates status bar countdown
+  startStatusBarTimers();
+  // Initiates a set interval to check for whether or not to start reducing the player's health
+  checkHealth();
+  // Checks the win / loss conditions
+  checkPlayerState();
+}
+
+// function loadAssets() {
+//   const assets = [
+//     "/images/gameBackgroundV2.png",
+//     "/images/dead_body.png",
+//     "/images/fridge.png",
+//     "/images/phone.png",
+//     "/images/bed.png",
+//     "/images/dressor.png",
+//   ];
+
+//   assets.forEach((imageSrc) => {
+//     const imageToLoad = new Image();
+//     imageToLoad.src = imageSrc;
+//   });
+// }

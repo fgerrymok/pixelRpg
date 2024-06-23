@@ -10,6 +10,7 @@ const imagesArray = [];
 const losingScreen = document.getElementById("losing-screen");
 const winningScreen = document.getElementById("winning-screen");
 const moneyOutput = document.getElementById("money-output");
+const startGameBtn = document.getElementById("start-game-button");
 
 // Classes
 
@@ -94,6 +95,10 @@ class GameObject {
 }
 
 // Event Listeners
+
+startGameBtn.addEventListener("click", () => {
+  startGame();
+});
 
 document.addEventListener("keydown", function (event) {
   const keyDown = event.key.toLowerCase();
