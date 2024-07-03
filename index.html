@@ -11,12 +11,25 @@
   <body>
     <div id="game-container">
       <div id="start-screen">
-        <h1>Clicking Simulator</h1>
-        <section id="start-game-button-section">
-          <button id="start-game-button">Start Game</button>
-        </section>
-        <section id="game-rules">
-          <h2>How to Play</h2>
+        <img src="images/intro_screen.png" alt="Intro Screen" />
+        <button id="start-game"></button>
+        <button id="instructions-btn"></button>
+        <div id="instructions">
+          <div id="instructions-top-bar">
+            <h1>Instructions</h1>
+            <button id="close-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 16.538l-4.592-4.548 4.546-4.587-1.416-1.403-4.545 4.589-4.588-4.543-1.405 1.405 4.593 4.552-4.547 4.592 1.405 1.405 4.555-4.596 4.591 4.55 1.403-1.416z"
+                />
+              </svg>
+            </button>
+          </div>
           <ul>
             <li>
               In this life simulator (clicking simulator), the goal of the game
@@ -30,7 +43,7 @@
                 src="images/desktop-off.png"
                 alt="Computer"
               />
-              to work in order to earn money.
+              to work and earn money.
             </li>
             <li>
               Don't starve! You can get food from
@@ -51,15 +64,14 @@
               to call your friends to fill up on your social needs.
             </li>
           </ul>
-        </section>
+        </div>
       </div>
       <canvas id="game-canvas" width="352" height="198"></canvas>
       <canvas id="static-canvas" width="352" height="198"></canvas>
-      <img
-        id="losing-screen"
-        src="/images/losing-screen.png"
-        alt="Game Death Screen"
-      />
+      <div id="losing-screen">
+        <img src="/images/game-over-screen.png" alt="Game Death Screen" />
+        <button id="play-again-button"></button>
+      </div>
       <img
         id="winning-screen"
         src="/images/winning-screen.png"

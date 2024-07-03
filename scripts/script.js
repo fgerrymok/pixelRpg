@@ -10,7 +10,10 @@ const imagesArray = [];
 const losingScreen = document.getElementById("losing-screen");
 const winningScreen = document.getElementById("winning-screen");
 const moneyOutput = document.getElementById("money-output");
-const startGameBtn = document.getElementById("start-game-button");
+const startGameBtn = document.getElementById("start-game");
+const playAgainBtn = document.getElementById("play-again-button");
+const closeBtn = document.getElementById("close-button");
+const instructionsBtn = document.getElementById("instructions-btn");
 
 // Classes
 
@@ -177,6 +180,15 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
+
+// Brings player back to instructional screen
+playAgainBtn.addEventListener("click", playAgain);
+
+// Opens game instructions
+instructionsBtn.addEventListener("click", toggleInstructions);
+
+// Closes game instructions
+closeBtn.addEventListener("click", toggleInstructions);
 
 // Functions
 
@@ -472,4 +484,13 @@ function checkPlayerState() {
       winningScreen.style.display = "block";
     }
   });
+}
+
+function playAgain() {
+  location.reload();
+  startGame();
+}
+
+function toggleInstructions() {
+  instructions.classList.toggle("toggled");
 }
