@@ -12,6 +12,7 @@ const winningScreen = document.getElementById("winning-screen");
 const moneyOutput = document.getElementById("money-output");
 const startGameBtn = document.getElementById("start-game");
 const playAgainBtn = document.getElementById("play-again-button");
+const playAgainBtnWin = document.getElementById("play-again-button-win");
 const closeBtn = document.getElementById("close-button");
 const instructionsBtn = document.getElementById("instructions-btn");
 
@@ -48,7 +49,7 @@ class Player {
     this.health = 5;
     this.hunger = 5;
     this.social = 5;
-    this.overallProgress = 0;
+    this.overallProgress = 8;
     this.money = 0;
     this.workProgress = 0;
   }
@@ -183,6 +184,7 @@ document.addEventListener("keydown", (event) => {
 
 // Brings player back to instructional screen
 playAgainBtn.addEventListener("click", playAgain);
+playAgainBtnWin.addEventListener("click", playAgain);
 
 // Opens game instructions
 instructionsBtn.addEventListener("click", toggleInstructions);
