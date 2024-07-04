@@ -15,7 +15,7 @@ img {
   margin: 0 auto;
   transform: scale(3) translateY(40%);
   position: relative;
-  background-color: gray;
+  background-color: #787566;
 }
 
 #game-canvas {
