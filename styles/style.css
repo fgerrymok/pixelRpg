@@ -6,6 +6,8 @@ img {
   image-rendering: pixelated;
 }
 
+/* Game Elements */
+
 #game-container {
   width: 22rem;
   height: 12.375rem;
@@ -27,7 +29,31 @@ img {
   z-index: 2;
 }
 
-#ham {
+#text-container {
+  display: none;
+}
+
+#text-container.toggled {
+  display: block;
+}
+
+#text-box {
+  position: absolute;
+  left: 11.1rem;
+  top: 3.4rem;
+  transform: scale(1.4);
+}
+
+#text-content {
+  position: absolute;
+  left: 11.3rem;
+  top: 3.55rem;
+  font-size: 0.35rem;
+  width: 2.6rem;
+  height: 1.3rem;
+}
+
+/* #ham {
   position: absolute;
   z-index: 3;
   right: 0;
@@ -43,7 +69,7 @@ img {
   right: 0;
   width: 3rem;
   font-size: 0.5rem;
-}
+} */
 
 #losing-screen {
   position: absolute;

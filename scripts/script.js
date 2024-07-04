@@ -15,6 +15,37 @@ const playAgainBtn = document.getElementById("play-again-button");
 const playAgainBtnWin = document.getElementById("play-again-button-win");
 const closeBtn = document.getElementById("close-button");
 const instructionsBtn = document.getElementById("instructions-btn");
+const textContainer = document.getElementById("text-container");
+const textContent = document.getElementById("text-content");
+
+// Dialouge Arrays
+
+const emptyFridgeDialouge = [
+  "I don't have enough money...",
+  "Too poor to eat.",
+  "Need some money.",
+  "The fridge is empty...",
+  "Gotta shop for food.",
+  "Can't eat, gotta code.",
+];
+
+const bedDialouge = [
+  "There are monsters nearby...",
+  "Can't sleep, gotta grind.",
+  "The sun is still out...",
+  "It's too bright to sleep.",
+  "To sleep or not to sleep...",
+  "I should work on my game.",
+];
+
+const dressorDialouge = [
+  "What should I wear today?",
+  "Wish I could afford clothing.",
+  "Missing a sock...",
+  "There's a hole in this shirt...",
+  "I need to do laundry soon.",
+  "Gotta get dressed.",
+];
 
 // Classes
 
@@ -46,7 +77,7 @@ class Player {
     this.y = y;
     this.cutX = 0;
     this.cutY = 0;
-    this.health = 5;
+    this.health = 500;
     this.hunger = 5;
     this.social = 5;
     this.overallProgress = 8;
@@ -170,14 +201,21 @@ document.addEventListener("keydown", (event) => {
   const keyDown = event.key;
   if (keyDown === " " || keyDown === "Enter") {
     const besideAndFacingFood = checkIfBesideAndFacingObject(0);
-    const besideAndFacingPhone = checkIfBesideAndFacingObject(1);
+    const besideAndFacingPhone = checkIfBesideAndFacingObject(5);
+    const besideAndFacingBed = checkIfBesideAndFacingObject(2);
+    const besideAndFacingDressor = checkIfBesideAndFacingObject(3);
     const besideAndFacingComputer = checkIfBesideAndFacingObject(4);
+
     if (besideAndFacingFood === true) {
       eatFood();
     } else if (besideAndFacingPhone === true) {
       makePhoneCall();
     } else if (besideAndFacingComputer === true && hero.workProgress === 0) {
       work();
+    } else if (besideAndFacingBed === true) {
+      interactWithBed();
+    } else if (besideAndFacingDressor === true) {
+      interactWithDressor();
     }
   }
 });
@@ -403,7 +441,23 @@ function eatFood() {
     hero.hunger += 1;
     hero.money -= 10;
     moneyOutput.innerText = `$${hero.money}`;
+  } else {
+    if (!textContainer.classList.contains("toggled")) {
+      const index = getRandomIndex();
+      textContent.innerText = `${emptyFridgeDialouge[index]}`;
+      textContainer.classList.toggle("toggled");
+      setTimeout(() => {
+        textContainer.classList.toggle("toggled");
+      }, 1500);
+    }
   }
+}
+
+function getRandomIndex() {
+  const maxIndex = 5;
+  const minIndex = -1;
+  const randNum = Math.ceil(Math.random() * (maxIndex - minIndex) + minIndex);
+  return randNum;
 }
 
 // Replenishes social status
@@ -433,6 +487,28 @@ function work() {
     clearInterval(workProgressBarHandler);
     hero.workProgress = 0;
   }, 5300);
+}
+
+function interactWithBed() {
+  if (!textContainer.classList.contains("toggled")) {
+    const index = getRandomIndex();
+    textContent.innerText = `${bedDialouge[index]}`;
+    textContainer.classList.toggle("toggled");
+    setTimeout(() => {
+      textContainer.classList.toggle("toggled");
+    }, 1500);
+  }
+}
+
+function interactWithDressor() {
+  if (!textContainer.classList.contains("toggled")) {
+    const index = getRandomIndex();
+    textContent.innerText = `${dressorDialouge[index]}`;
+    textContainer.classList.toggle("toggled");
+    setTimeout(() => {
+      textContainer.classList.toggle("toggled");
+    }, 1500);
+  }
 }
 
 // Checks to see if the character is directly beside AND facing a game object. Accepts an integer value to determine which object we would like to check for.
