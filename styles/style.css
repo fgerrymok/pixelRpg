@@ -206,4 +206,6 @@ img {
 
 .instructional-images {
   transform: scale(0.5) translateY(60%);
+  margin-left: -0.4rem;
+  margin-right: -0.4rem;
 }
