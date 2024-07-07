@@ -77,10 +77,10 @@ class Player {
     this.y = y;
     this.cutX = 0;
     this.cutY = 0;
-    this.health = 500;
+    this.health = 5;
     this.hunger = 5;
     this.social = 5;
-    this.overallProgress = 8;
+    this.overallProgress = 0;
     this.money = 0;
     this.workProgress = 0;
   }
@@ -169,32 +169,6 @@ document.addEventListener("keydown", function (event) {
     }
   }
 });
-
-function checkForCollisions(object, keyDown) {
-  if (
-    (hero.x == object.x - 1 && hero.y == object.y && keyDown == "d") ||
-    (hero.x == object.x + 1 && hero.y == object.y && keyDown == "a") ||
-    (hero.x == object.x && hero.y == object.y - 1 && keyDown == "s") ||
-    (hero.x == object.x && hero.y == object.y + 1 && keyDown == "w")
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function checkForWalls(keyDown) {
-  if (
-    (map.y === 3 && keyDown === "w") ||
-    (map.y === 0 && keyDown === "s") ||
-    (map.x === 10 && keyDown === "a") ||
-    (map.x === 0 && keyDown === "d")
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 // Listens for 'spacebar' and 'enter' to see if the character is beside either the food item, or the social item.
 document.addEventListener("keydown", (event) => {
@@ -418,6 +392,34 @@ function loadGameAssets() {
   }, 100);
 }
 
+// Check to see if player will collide with a game object.
+function checkForCollisions(object, keyDown) {
+  if (
+    (hero.x == object.x - 1 && hero.y == object.y && keyDown == "d") ||
+    (hero.x == object.x + 1 && hero.y == object.y && keyDown == "a") ||
+    (hero.x == object.x && hero.y == object.y - 1 && keyDown == "s") ||
+    (hero.x == object.x && hero.y == object.y + 1 && keyDown == "w")
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Checks to see if player will collide with a wall.
+function checkForWalls(keyDown) {
+  if (
+    (map.y === 3 && keyDown === "w") ||
+    (map.y === 0 && keyDown === "s") ||
+    (map.x === 10 && keyDown === "a") ||
+    (map.x === 0 && keyDown === "d")
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // Starts the count down that decrease food levels.
 function startStatusBarTimers() {
   // Hunger Status Timer
@@ -425,14 +427,14 @@ function startStatusBarTimers() {
     if (hero.hunger > 0) {
       hero.hunger -= 1;
     }
-  }, 7000);
+  }, 9000);
 
   // Social Status Timer
   setInterval(() => {
     if (hero.social > 0) {
       hero.social -= 1;
     }
-  }, 4000);
+  }, 6000);
 }
 
 // Replenishes hunger status
@@ -453,6 +455,7 @@ function eatFood() {
   }
 }
 
+// Generates random number between 0 and 5.
 function getRandomIndex() {
   const maxIndex = 5;
   const minIndex = -1;
@@ -460,14 +463,14 @@ function getRandomIndex() {
   return randNum;
 }
 
-// Replenishes social status
+// Replenishes social status.
 function makePhoneCall() {
   if (hero.social < 5) {
     hero.social += 1;
   }
 }
 
-// Increases money
+// Increases money.
 function work() {
   const workProgressBarHandler = setInterval(() => {
     const besideAndFacingComputer = checkIfBesideAndFacingObject(4);
@@ -489,6 +492,7 @@ function work() {
   }, 5300);
 }
 
+//  Randomly outputs text when player interacts with bed.
 function interactWithBed() {
   if (!textContainer.classList.contains("toggled")) {
     const index = getRandomIndex();
@@ -500,6 +504,7 @@ function interactWithBed() {
   }
 }
 
+// Randomly outputs text when player interacts with dressor.
 function interactWithDressor() {
   if (!textContainer.classList.contains("toggled")) {
     const index = getRandomIndex();
@@ -551,6 +556,7 @@ function checkHealth() {
   }, 100);
 }
 
+// Checks to see if player is still alive, OR if the game has been won.
 function checkPlayerState() {
   setInterval(() => {
     if (hero.health === 0) {
@@ -564,11 +570,13 @@ function checkPlayerState() {
   });
 }
 
+// Restarts the game.
 function playAgain() {
   location.reload();
   startGame();
 }
 
+// Shows and hides instructions menu.
 function toggleInstructions() {
   instructions.classList.toggle("toggled");
 }

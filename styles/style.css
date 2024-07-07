@@ -1,3 +1,5 @@
+/* General */
+
 body {
   background-color: white;
 }
@@ -52,24 +54,6 @@ img {
   width: 2.6rem;
   height: 1.3rem;
 }
-
-/* #ham {
-  position: absolute;
-  z-index: 3;
-  right: 0;
-  top: 0.5rem;
-  width: 3rem;
-  font-size: 0.5rem;
-}
-
-#phone {
-  position: absolute;
-  z-index: 3;
-  top: 2.5rem;
-  right: 0;
-  width: 3rem;
-  font-size: 0.5rem;
-} */
 
 #losing-screen {
   position: absolute;
@@ -132,7 +116,7 @@ img {
 
 #start-game {
   position: absolute;
-  bottom: 5.2rem;
+  bottom: 3.3rem;
   left: 5.2rem;
   background-color: rgba(0, 0, 0, 0);
   width: 11.5rem;
