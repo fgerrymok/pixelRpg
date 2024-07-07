@@ -5,11 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/style.css" />
     <script defer src="scripts/script.js"></script>
+    <script defer src="scripts/init.js"></script>
     <title>Pixel RPG</title>
   </head>
   <body>
     <div id="game-container">
+      <div id="start-screen">
+        <img src="images/intro_screen.png" alt="Intro Screen" />
+        <button id="start-game"></button>
+        <button id="instructions-btn"></button>
+        <div id="instructions">
+          <div id="instructions-top-bar">
+            <h1>Instructions</h1>
+            <button id="close-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 16.538l-4.592-4.548 4.546-4.587-1.416-1.403-4.545 4.589-4.588-4.543-1.405 1.405 4.593 4.552-4.547 4.592 1.405 1.405 4.555-4.596 4.591 4.55 1.403-1.416z"
+                />
+              </svg>
+            </button>
+          </div>
+          <ul>
+            <li>
+              <em>
+                In this life simulator (clicking simulator), the goal of the
+                game is to work on your project while making sure your basic
+                needs are met to ensure your survival.
+              </em>
+            </li>
+            <li>
+              Interact with
+              <img
+                class="instructional-images"
+                src="images/desktop-off.png"
+                alt="Computer"
+              />
+              to work and earn money.
+            </li>
+            <li>
+              Don't starve! You can get food from
+              <img
+                class="instructional-images"
+                src="images/fridge.png"
+                alt="Fridge"
+              />
+              to fill up your hunger bar. Nothing in life is free though...
+            </li>
+            <li>
+              Life can get lonely! Use
+              <img
+                class="instructional-images"
+                src="images/cabinet-side-with-phone.png"
+                alt="Phone"
+              />
+              to call your friends to fill up on your social needs.
+            </li>
+          </ul>
+        </div>
+      </div>
       <canvas id="game-canvas" width="352" height="198"></canvas>
+      <canvas id="static-canvas" width="352" height="198"></canvas>
+      <div id="losing-screen">
+        <img src="/images/game-over-screen.png" alt="Game Death Screen" />
+        <button id="play-again-button"></button>
+      </div>
+      <div id="winning-screen">
+        <img src="/images/win-screen.png" alt="Winning Screen" />
+        <button id="play-again-button-win"></button>
+      </div>
+
+      <div>
+        <p id="money-output">$0</p>
+        <div id="text-container">
+          <img
+            id="text-box"
+            src="images/text-box.png"
+            alt="Text Box for Character Dialouge"
+          />
+          <div>
+            <p id="text-content"></p>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

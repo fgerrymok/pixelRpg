@@ -1,7 +1,195 @@
+/* General */
+
 body {
-    background-color: blue;
+  background-color: white;
 }
 
-#game-canvas{
-    border: 1px solid black;
+img {
+  image-rendering: pixelated;
+}
+
+/* Game Elements */
+
+#game-container {
+  width: 22rem;
+  height: 12.375rem;
+  border: 1px solid black;
+  margin: 0 auto;
+  transform: scale(3) translateY(40%);
+  position: relative;
+  background-color: #787566;
+}
+
+#game-canvas {
+  image-rendering: pixelated;
+  position: absolute;
+}
+
+#static-canvas {
+  image-rendering: pixelated;
+  position: absolute;
+  z-index: 2;
+}
+
+#text-container {
+  display: none;
+}
+
+#text-container.toggled {
+  display: block;
+}
+
+#text-box {
+  position: absolute;
+  left: 11.1rem;
+  top: 3.4rem;
+  transform: scale(1.4);
+}
+
+#text-content {
+  position: absolute;
+  left: 11.3rem;
+  top: 3.55rem;
+  font-size: 0.35rem;
+  width: 2.6rem;
+  height: 1.3rem;
+}
+
+#losing-screen {
+  position: absolute;
+  z-index: 4;
+  display: none;
+}
+
+#play-again-button {
+  position: absolute;
+  bottom: 4.23rem;
+  left: 7.8rem;
+  background-color: rgba(0, 0, 0, 0);
+  width: 6.3rem;
+  height: 1rem;
+  border: none;
+}
+
+#play-again-button-win {
+  position: absolute;
+  bottom: 4.05rem;
+  left: 7.85rem;
+  background-color: rgba(0, 0, 0, 0);
+  width: 6.3rem;
+  height: 1rem;
+  border: none;
+}
+
+#play-again-button:hover,
+#play-again-button-win:hover {
+  border: 1px solid #d8d272;
+}
+
+#winning-screen {
+  position: absolute;
+  z-index: 4;
+  display: none;
+}
+
+#money-output {
+  margin: 0;
+  font-size: 0.6rem;
+  position: absolute;
+  top: 0.66rem;
+  right: 1.1rem;
+  z-index: 3;
+}
+
+/* Intro Screen */
+
+#start-screen {
+  position: absolute;
+  z-index: 4;
+  width: 352px;
+  height: 198px;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#start-game {
+  position: absolute;
+  bottom: 3.3rem;
+  left: 5.2rem;
+  background-color: rgba(0, 0, 0, 0);
+  width: 11.5rem;
+  height: 2rem;
+  border: none;
+}
+
+#instructions-btn {
+  position: absolute;
+  bottom: 0.3rem;
+  left: 7rem;
+  background-color: rgba(0, 0, 0, 0);
+  width: 8rem;
+  height: 1.2rem;
+  border: none;
+}
+
+#start-game:hover,
+#instructions-btn:hover {
+  border: 1px solid #d8d272;
+}
+
+/* Instructions Popup */
+
+#instructions {
+  background-color: #d5a9fe;
+  position: absolute;
+  top: 0rem;
+  bottom: 0rem;
+  left: 0rem;
+  width: 14.5625rem;
+  height: 12.375rem;
+  display: none;
+}
+
+#instructions.toggled {
+  display: block;
+}
+
+#close-button {
+  position: absolute;
+  right: 0rem;
+  background: transparent;
+  border: none;
+  transform: scale(0.6);
+}
+
+#instructions-top-bar {
+  display: flex;
+}
+
+#instructions h1 {
+  background-color: #d5a9fe;
+  font-size: 1rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  padding-top: 0.5rem;
+  margin-bottom: -0.7rem;
+}
+
+#instructions ul {
+  list-style-type: none;
+  padding: 1rem;
+}
+
+#instructions li {
+  font-size: 0.6rem;
+  margin-top: -0.7rem;
+}
+
+.instructional-images {
+  transform: scale(0.5) translateY(60%);
+  margin-left: -0.4rem;
+  margin-right: -0.4rem;
 }
